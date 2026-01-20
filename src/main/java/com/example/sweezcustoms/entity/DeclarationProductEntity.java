@@ -3,6 +3,7 @@ package com.example.sweezcustoms.entity;
 import com.example.sweezcustoms.enums.CustomsStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "declaration_products")
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeclarationProductEntity extends BaseEntity{

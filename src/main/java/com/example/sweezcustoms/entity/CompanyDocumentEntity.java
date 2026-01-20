@@ -4,6 +4,7 @@ import com.example.sweezcustoms.enums.CompanyDocumentType;
 import com.example.sweezcustoms.enums.CustomsStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "company_documents")
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class CompanyDocumentEntity extends BaseEntity{

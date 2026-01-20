@@ -4,6 +4,7 @@ import com.example.sweezcustoms.enums.CustomsStatusEnum;
 import com.example.sweezcustoms.enums.IndividualDocumentType;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "individual_documents")
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class IndividualDocumentEntity extends BaseEntity{

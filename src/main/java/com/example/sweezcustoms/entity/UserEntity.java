@@ -2,6 +2,7 @@ package com.example.sweezcustoms.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 @Table(name = "users")
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserEntity extends BaseEntity{
@@ -27,9 +28,14 @@ public class UserEntity extends BaseEntity{
 
     @Column(name = "created_at")
     private LocalDate createdAt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     private CompanyEntity companyEntity;
+
+    @OneToOne
+    @JoinColumn(name = "participant_id", referencedColumnName = "id")
+    private Participant participant;
 
     @PrePersist
     public void prePersist(){
