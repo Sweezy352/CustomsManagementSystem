@@ -15,7 +15,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CompanyEntity extends BaseEntity{
+public class CompanyEntity extends Participant{
     @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "tin", nullable = false, unique = true)
@@ -32,17 +32,28 @@ public class CompanyEntity extends BaseEntity{
     @Column(name = "verified_at")
     private LocalDateTime verifiedAt;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "companyEntity")
-    private List<UserEntity> usersCompany;
+    private List<UserEntity> employees;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "companyEntity")
     private List<CompanyDocumentEntity> companyDocuments;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "companyEntity")
-    private List<DeclarationEntity> declarationEntities;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "companyEntity")
-    private List<PaymentInvoiceEntity> paymentInvoices;
 
     @PrePersist
     public void prePersist() {
         status = CustomsStatusEnum.PENDING;
         createdAt = LocalDateTime.now();
+    }
+
+    @Override
+    public String getType() {
+        return name;
+    }
+
+    @Override
+    public String getTin() {
+        return tin;
+    }
+
+    @Override
+    public CustomsStatusEnum getStatus() {
+        return status;
     }
 }

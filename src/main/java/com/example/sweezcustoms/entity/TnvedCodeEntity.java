@@ -1,17 +1,17 @@
 package com.example.sweezcustoms.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tnved_codes")
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class TnvedCodeEntity extends BaseEntity{
@@ -25,4 +25,14 @@ public class TnvedCodeEntity extends BaseEntity{
     private BigDecimal defaultExciseRate;
     @Column(name = "default_nds_rate", nullable = false)
     private BigDecimal defaultNdsRate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private UserEntity userEntity;
+    @Column(name = "date_created")
+    private LocalDateTime dateCreated;
+
+    @PrePersist
+    public void prePersist() {
+        dateCreated = LocalDateTime.now();
+    }
 }

@@ -2,6 +2,7 @@ package com.example.sweezcustoms.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 
@@ -9,7 +10,7 @@ import java.math.BigDecimal;
 @Table(name = "invoice_descriptions")
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class InvoiceDescriptionEntity extends BaseEntity{

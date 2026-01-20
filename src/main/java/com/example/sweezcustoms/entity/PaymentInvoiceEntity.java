@@ -3,6 +3,7 @@ package com.example.sweezcustoms.entity;
 import com.example.sweezcustoms.enums.PaymentStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -13,13 +14,14 @@ import java.util.List;
 @Table(name = "payment_invoices")
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaymentInvoiceEntity extends BaseEntity {
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "company_id", referencedColumnName = "id")
-    private CompanyEntity companyEntity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "participant_id", referencedColumnName = "id")
+    private Participant participant;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "declaration_id", referencedColumnName = "id")
     private DeclarationEntity declarationEntity;

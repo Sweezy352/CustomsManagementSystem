@@ -4,22 +4,20 @@ import com.example.sweezcustoms.enums.CustomsStatusEnum;
 import com.example.sweezcustoms.enums.DeclarationDocumentType;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "declaration_documents")
+@Table(name = "declaration_product_documents")
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeclarationDocumentEntity extends BaseEntity {
+public class DeclarationProductDocumentEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "declaration_id", referencedColumnName = "id")
-    private DeclarationEntity declarationEntity;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @JoinColumn(name = "declaration_product_id", referencedColumnName = "id")
     private DeclarationProductEntity declarationProductEntity;
     @Column(name = "type", nullable = false)
     private DeclarationDocumentType declarationDocumentType;

@@ -1,13 +1,12 @@
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id bigserial primary key,
     mail varchar not null unique,
     phone varchar(20) not null unique,
     password varchar not null,
     created_at date default now()
-    --company_id bigint references companies(id)
 );
 
-CREATE TABLE companies (
+CREATE TABLE IF NOT EXISTS companies (
     id bigserial primary key,
     name varchar not null,
     tin varchar not null unique, -- регистрационный номер
@@ -18,21 +17,21 @@ CREATE TABLE companies (
     verified_at timestamp with time zone
 );
 
-ALTER TABLE users add column company_id bigint references companies(id);
+ALTER TABLE users add column IF NOT EXISTS company_id bigint references companies(id);
 
-CREATE TABLE roles (
+CREATE TABLE IF NOT EXISTS roles (
     id bigserial primary key,
     role_name varchar(20) unique not null
 );
 
-CREATE TABLE m2m_users_roles(
+CREATE TABLE IF NOT EXISTS m2m_users_roles(
     user_id bigint references users(id),
     role_id bigint references roles(id)
 );
 
-CREATE TABLE individuals (
+CREATE TABLE IF NOT EXISTS individuals (
     id bigserial primary key,
-    user_id bigint references users(id),
+    user_id bigint references users(id) unique,
     full_name varchar not null,
     passport_series varchar(20) not null unique,
     birth_date date not null,
@@ -44,7 +43,7 @@ CREATE TABLE individuals (
     verified_at timestamp with time zone
 );
 
-CREATE TABLE tnved_codes (
+CREATE TABLE IF NOT EXISTS tnved_codes (
     id bigserial primary key,
     code varchar not null unique,
     description text not null,
@@ -55,7 +54,7 @@ CREATE TABLE tnved_codes (
 
 
 
-CREATE TABLE declarations (
+CREATE TABLE IF NOT EXISTS declarations (
     id bigserial primary key,
     company_id bigint references companies(id),
     individual_id bigint references individuals(id),
@@ -67,7 +66,7 @@ CREATE TABLE declarations (
     check ( company_id notnull or individual_id notnull )
 );
 
-CREATE TABLE declaration_products (
+CREATE TABLE IF NOT EXISTS declaration_products (
     id bigserial primary key,
     declaration_id bigint references declarations(id),
     name varchar not null,
@@ -85,7 +84,7 @@ CREATE TABLE declaration_products (
     verified_at timestamp with time zone
 );
 
-CREATE TABLE file_storage (
+CREATE TABLE IF NOT EXISTS file_storage (
     id bigserial primary key,
     original_file_name varchar not null,
     mime_type varchar not null,
@@ -95,7 +94,7 @@ CREATE TABLE file_storage (
     uploaded_at timestamp with time zone default now()
 );
 
-CREATE TABLE company_documents (
+CREATE TABLE IF NOT EXISTS company_documents (
     id bigserial primary key,
     company_id bigint references companies(id),
     document_type varchar(25) not null,
@@ -106,7 +105,7 @@ CREATE TABLE company_documents (
     verified_at timestamp with time zone
 );
 
-CREATE TABLE individual_documents (
+CREATE TABLE IF NOT EXISTS individual_documents (
     id bigserial primary key,
     individual_id bigint references individuals(id),
     document_type varchar not null,
@@ -117,7 +116,7 @@ CREATE TABLE individual_documents (
     verified_at timestamp with time zone
 );
 
-CREATE TABLE declaration_documents (
+CREATE TABLE IF NOT EXISTS declaration_documents (
     id bigserial primary key,
     declaration_id bigint references declarations(id),
     product_id bigint references declaration_products(id),
@@ -129,7 +128,7 @@ CREATE TABLE declaration_documents (
     verified_at timestamp with time zone
 );
 
-CREATE TABLE declarations_history (
+CREATE TABLE IF NOT EXISTS declarations_history (
     id bigserial primary key,
     declaration_id bigint references declarations(id),
     user_id bigint references users(id),
@@ -138,7 +137,7 @@ CREATE TABLE declarations_history (
     date timestamp with time zone not null
 );
 
-CREATE TABLE reported_caches (
+CREATE TABLE IF NOT EXISTS reported_caches (
     id bigserial primary key,
     company_id bigint references companies(id),
     period_start timestamp with time zone not null,
@@ -150,7 +149,7 @@ CREATE TABLE reported_caches (
     generated_at timestamp with time zone default now()
 );
 
-CREATE TABLE payment_invoices (
+CREATE TABLE IF NOT EXISTS payment_invoices (
     id bigserial primary key,
     company_id bigint references companies(id),
     declaration_id bigint references declarations(id),
@@ -164,10 +163,23 @@ CREATE TABLE payment_invoices (
     date_paid timestamp with time zone
 );
 
-CREATE TABLE invoice_descriptions (
+CREATE TABLE IF NOT EXISTS invoice_descriptions (
     id bigserial primary key,
     invoice_id bigint references payment_invoices(id),
     description varchar not null,
     amount DECIMAL(19, 2) not null,
     source_product_id bigint references declaration_products(id)
 );
+
+CREATE TABLE IF NOT EXISTS declaration_product_documents(
+    id bigserial primary key,
+    declaration_product_id bigint references declaration_products,
+    type varchar not null,
+    file_id bigint references file_storage(id),
+    uploaded_at timestamp with time zone default now(),
+    status varchar(20) default 'PENDING',
+    verified_by bigint references users(id),
+    verified_at timestamp with time zone default now()
+);
+
+ALTER TABLE tnved_codes ADD COLUMN IF NOT EXISTS user_id bigint references users(id), ADD COLUMN IF NOT EXISTS date_created timestamp with time zone default now();

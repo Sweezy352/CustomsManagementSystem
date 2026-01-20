@@ -5,6 +5,7 @@ import com.example.sweezcustoms.enums.DeclarationTypeEnum;
 import com.example.sweezcustoms.exceptions.BothFieldNullPointerException;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,16 +15,13 @@ import java.util.Objects;
 @Table(name = "declarations")
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeclarationEntity extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id", referencedColumnName = "id")
-    private CompanyEntity companyEntity;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "individual_id", referencedColumnName = "id")
-    private IndividualEntity individualEntity;
+    @JoinColumn(name = "participant_id", referencedColumnName = "id")
+    private Participant participant;
     @Column(name = "type", nullable = false)
     private DeclarationTypeEnum type;
     @Column(name = "status")
@@ -44,8 +42,5 @@ public class DeclarationEntity extends BaseEntity{
     public void prePersist() {
         status = CustomsStatusEnum.DRAFT;
         createdAt = LocalDateTime.now();
-        if(Objects.isNull(companyEntity) && Objects.isNull(individualEntity)){
-            throw new BothFieldNullPointerException("Can't have both fields null");
-        }
     }
 }
