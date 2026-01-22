@@ -1,3 +1,4 @@
+
 ALTER TABLE users ADD CONSTRAINT uq_users_participant_id unique (participant_id);
 
 ALTER TABLE payment_invoices DROP COLUMN IF EXISTS company_id;

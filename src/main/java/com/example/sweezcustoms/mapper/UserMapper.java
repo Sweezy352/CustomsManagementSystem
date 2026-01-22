@@ -19,26 +19,29 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public abstract class UserMapper {
-
     @Autowired
     @Lazy
     protected CompanyMapper companyMapper;
     @Autowired
     @Lazy
     protected IndividualMapper individualMapper;
+    @Autowired
+    protected RoleMapper roleMapper;
 
-    abstract UserEntity toEntity(UserDtoRequest request);
+
+    @Mapping(target = "roles", expression = "java(roleMapper.mapRole(request.getRoleName()))")
+    abstract public UserEntity toEntity(UserDtoRequest request);
 
     @Mapping(target = "roles", source = "roles", qualifiedByName = "mapListRoles")
     @Mapping(target = "participantDto", expression = "java(ParticipantMapper.toParticipantDto(userEntity.getParticipant()))")
-    abstract UserDtoResponse toDtoResponse(UserEntity userEntity);
+    abstract public UserDtoResponse toDtoResponse(UserEntity userEntity);
 
-    abstract List<UserDtoResponse> toDtoResponseList(List<UserEntity> userEntities);
+    abstract public List<UserDtoResponse> toDtoResponseList(List<UserEntity> userEntities);
 
     @Mapping(target = "roles", source = "roles", qualifiedByName = "mapListRoles")
-    abstract UserDtoView toDtoView(UserEntity userEntity);
+    abstract public UserDtoView toDtoView(UserEntity userEntity);
 
-    abstract List<UserDtoView> toDtoViewList(List<UserEntity> userEntities);
+    abstract public List<UserDtoView> toDtoViewList(List<UserEntity> userEntities);
 
     @Named("mapListRoles")
      public List<String> mapListRoles(List<RoleEntity> roles){

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
 
@@ -18,8 +19,13 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoleEntity extends BaseEntity{
+public class RoleEntity extends BaseEntity implements GrantedAuthority {
     private String roleName;
     @ManyToMany(mappedBy = "roles")
     private List<UserEntity> userEntities;
+
+    @Override
+    public String getAuthority() {
+        return roleName;
+    }
 }

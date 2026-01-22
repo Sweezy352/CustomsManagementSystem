@@ -11,6 +11,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDtoRequest {
+    @NotNull(message = "Username is mandatory")
+    @NotBlank(message = "Username is mandatory")
+    private String username;
     @NotNull(message = "Mail is mandatory")
     @NotBlank(message = "Mail is mandatory")
     private String mail;
