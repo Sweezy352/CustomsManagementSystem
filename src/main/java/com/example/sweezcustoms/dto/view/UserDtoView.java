@@ -11,6 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 public class UserDtoView {
     private Long id;
+    private String username;
     private String mail;
+    private String phone;
     private List<String> roles;
 }

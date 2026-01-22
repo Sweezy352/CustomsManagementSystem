@@ -3,8 +3,11 @@ package com.example.sweezcustoms.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -14,7 +17,9 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity extends BaseEntity{
+public class UserEntity extends BaseEntity implements UserDetails {
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
     @Column(name = "mail", nullable = false, unique = true)
     private String mail;
     @Column(name = "phone", nullable = false, unique = true)
@@ -41,4 +46,16 @@ public class UserEntity extends BaseEntity{
     public void prePersist(){
         createdAt = LocalDate.now();
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
+    }
+
+    @Override
+    public String getUsername() {
+        return mail;
+    }
+
+
 }
