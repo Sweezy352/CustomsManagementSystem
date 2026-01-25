@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CompanyDocumentDtoRequest {
-    @NotNull(message = "Company document type is mandatory")
-    @NotBlank(message = "Company document type is mandatory")
+    @NotNull(message = "{doc.type.required}")
+    @NotBlank(message = "{doc.type.required}")
     private CompanyDocumentType companyDocumentType;
 }

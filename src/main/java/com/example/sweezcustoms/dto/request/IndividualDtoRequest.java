@@ -12,19 +12,19 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class IndividualDtoRequest {
-    @NotNull(message = "Full name is mandatory")
-    @NotBlank(message = "Full name is mandatory")
+    @NotNull(message = "{individual.fullname.required}")
+    @NotBlank(message = "{individual.fullname.required}")
     private String fullName;
-    @NotNull(message = "Passport series is mandatory")
-    @NotBlank(message = "Passport series is mandatory")
+    @NotNull(message = "{individual.passport.required}")
+    @NotBlank(message = "{individual.passport.required}")
     private String passportSeries;
-    @NotNull(message = "Birth date is mandatory")
-    @NotBlank(message = "Birth date is mandatory")
+    @NotNull(message = "{individual.birthdate.required}")
+    @NotBlank(message = "{individual.birthdate.required}")
     private LocalDate birthDate;
-    @NotNull(message = "Address is mandatory")
-    @NotBlank(message = "Address is mandatory")
+    @NotNull(message = "{address.required}")
+    @NotBlank(message = "{address.required}")
     private String address;
-    @NotNull(message = "Tin is mandatory")
-    @NotBlank(message = "Tin is mandatory")
+    @NotNull(message = "{tin.required}")
+    @NotBlank(message = "{tin.required}")
     private String tin;
 }

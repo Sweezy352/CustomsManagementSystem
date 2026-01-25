@@ -12,19 +12,19 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DeclarationProductDtoRequest {
-    @NotNull(message = "Name is mandatory")
-    @NotBlank(message = "Name is mandatory")
+    @NotNull(message = "{product.name.required}")
+    @NotBlank(message = "{product.name.required}")
     private String name;
-    @NotNull(message = "Quantity is mandatory")
-    @NotBlank(message = "Quantity is mandatory")
+    @NotNull(message = "{product.quantity.required}")
+    @NotBlank(message = "{product.quantity.required}")
     private Long quantity;
-    @NotNull(message = "Weight is mandatory")
-    @NotBlank(message = "Weight is mandatory")
+    @NotNull(message = "{product.weight.required}")
+    @NotBlank(message = "{product.weight.required}")
     private BigDecimal weight;
-    @NotNull(message = "Price per unit is mandatory")
-    @NotBlank(message = "Price per unit is mandatory")
+    @NotNull(message = "{product.price.required}")
+    @NotBlank(message = "{product.price.required}")
     private BigDecimal pricePerUnit;
-    @NotNull(message = "Country of origin is mandatory")
-    @NotBlank(message = "Country of origin is mandatory")
+    @NotNull(message = "{product.origin.required}")
+    @NotBlank(message = "{product.origin.required}")
     private String countryOfOrigin;
 }

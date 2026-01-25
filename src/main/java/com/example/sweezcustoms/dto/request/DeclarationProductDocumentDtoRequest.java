@@ -12,7 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeclarationProductDocumentDtoRequest {
-    @NotNull(message = "Document type is mandatory")
-    @NotBlank(message = "Document type is mandatory")
+    @NotNull(message = "{doc.type.required}")
+    @NotBlank(message = "{doc.type.required}")
     private DeclarationDocumentType documentType;
 }

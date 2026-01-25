@@ -11,20 +11,20 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDtoRequest {
-    @NotNull(message = "Username is mandatory")
-    @NotBlank(message = "Username is mandatory")
+    @NotNull(message = "{auth.username.notnull}")
+    @NotBlank(message = "{auth.username.notnull}")
     private String username;
-    @NotNull(message = "Mail is mandatory")
-    @NotBlank(message = "Mail is mandatory")
+    @NotNull(message = "{mail.required}")
+    @NotBlank(message = "{mail.required}")
     private String mail;
-    @NotNull(message = "Phone is mandatory")
-    @NotBlank(message = "Phone is mandatory")
+    @NotNull(message = "{phone.required}")
+    @NotBlank(message = "{phone.required}")
     private String phone;
-    @NotNull(message = "Password is mandatory")
-    @NotBlank(message = "Password is mandatory")
-    @Size(min = 5, max = 15, message = "Password must be between 5 and 15 characters")
+    @NotNull(message = "{auth.password.notnull}")
+    @NotBlank(message = "{auth.password.notnull}")
+    @Size(min = 5, max = 15, message = "{auth.password.size}")
     private String password;
-    @NotNull(message = "Role is mandatory")
-    @NotBlank(message = "Role is mandatory")
+    @NotNull(message = "{role.required}")
+    @NotBlank(message = "{role.required}")
     private String roleName;
 }

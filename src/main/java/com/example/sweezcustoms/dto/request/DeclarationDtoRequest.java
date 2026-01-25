@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DeclarationDtoRequest {
-    @NotNull(message = "Declaration type is mandatory")
-    @NotBlank(message = "Declaration type is mandatory")
+    @NotNull(message = "{declaration.type.required}")
+    @NotBlank(message = "{declaration.type.required}")
     private DeclarationTypeEnum declarationTypeEnum;
 }

@@ -1,5 +1,7 @@
 package com.example.sweezcustoms.dto.request;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter
@@ -8,6 +10,10 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class AuthenticationRequest {
-    private String mail;
+    @NotNull(message = "{auth.username.notnull}")
+    @NotEmpty(message = "{auth.username.notempty}")
+    private String username;
+    @NotNull(message = "{auth.password.notnull}")
+    @NotEmpty(message = "{auth.password.notempty}")
     private String password;
 }
