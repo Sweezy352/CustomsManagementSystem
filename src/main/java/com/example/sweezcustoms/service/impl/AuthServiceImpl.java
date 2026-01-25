@@ -37,7 +37,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void loginWithEmail(String email) {
-
+        UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(""));
     }
 
     @Override
