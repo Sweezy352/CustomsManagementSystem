@@ -11,8 +11,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class IndividualDocumentDtoRequest {
-    @NotNull(message = "Document type is mandatory")
-    @NotBlank(message = "Document type is mandatory")
+    @NotNull(message = "{doc.type.required}")
+    @NotBlank(message = "{doc.type.required}")
     private IndividualDocumentType individualDocumentType;
     private Long fileId;
 }

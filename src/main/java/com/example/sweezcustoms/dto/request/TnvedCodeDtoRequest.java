@@ -12,19 +12,19 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TnvedCodeDtoRequest {
-    @NotNull(message = "Code is mandatory")
-    @NotBlank(message = "Code is mandatory")
+    @NotNull(message = "{tnved.code.required}")
+    @NotBlank(message = "{tnved.code.required}")
     private String code;
-    @NotNull(message = "Description is mandatory")
-    @NotBlank(message = "Description is mandatory")
+    @NotNull(message = "{tnved.description.required}")
+    @NotBlank(message = "{tnved.description.required}")
     private String description;
-    @NotNull(message = "Default customs duty rate is mandatory")
-    @NotBlank(message = "Default customs duty rate is mandatory")
+    @NotNull(message = "{tnved.duty.required}")
+    @NotBlank(message = "{tnved.duty.required}")
     private BigDecimal defaultCustomsDutyRate;
-    @NotNull(message = "Default excise rate is mandatory")
-    @NotBlank(message = "Default excise rate is mandatory")
+    @NotNull(message = "{tnved.excise.required}")
+    @NotBlank(message = "{tnved.excise.required}")
     private BigDecimal defaultExciseRate;
-    @NotNull(message = "Default nds rate is mandatory")
-    @NotBlank(message = "Default nds rate is mandatory")
+    @NotNull(message = "{tnved.nds.required}")
+    @NotBlank(message = "{tnved.nds.required}")
     private BigDecimal defaultNdsRate;
 }
