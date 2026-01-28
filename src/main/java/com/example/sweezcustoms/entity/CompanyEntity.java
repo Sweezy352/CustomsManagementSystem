@@ -35,6 +35,8 @@ public class CompanyEntity extends Participant{
     private List<UserEntity> employees;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "companyEntity")
     private List<CompanyDocumentEntity> companyDocuments;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "companyEntity")
+    private List<BranchCompanyEntity> branchCompanyEntities;
 
     @PrePersist
     public void prePersist() {
