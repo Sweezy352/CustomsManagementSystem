@@ -9,9 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface AuthService extends UserDetailsService {
     UserEntity register(UserEntity userEntity);
     AuthenticationToken login(AuthenticationTokenRequest authenticationTokenRequest);
-    void loginWithEmail(String email);
-    AuthenticationToken confirmCodeFromEmail(String code);
     void passwordRecovery(String email);
     AuthenticationToken resetPassword(String code, PasswordConfirmation passwordConfirmation);
+    AuthenticationToken refreshToken(String refreshToken);
     UserEntity getCurrent();
 }

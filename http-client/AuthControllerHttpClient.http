@@ -17,6 +17,13 @@ POST http://localhost:8080/api/auth/login
 Content-Type: application/json
 
 {
-  "username": "user_1",
+  "email": "user_1@gmail.com",
   "password": "qweqwe"
 }
+
+###
+
+
+POST http://localhost:8080/api/auth/refresh-token
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJtYWlsIjoidXNlcl8xQGdtYWlsLmNvbSIsImlkIjoxMCwic3ViIjoidXNlcl8xQGdtYWlsLmNvbSIsImlhdCI6MTc2OTUyNTg3MSwiZXhwIjoxNzcwMTMwNjcxfQ.dGAfzWUIqxkb6UjgGnFsZrLGvnCp2tfBhPwwtxibMRK5xV2dHNYtlmGtOu0V24ZOwloM2aDxKt6Gv1Wh283XhQ

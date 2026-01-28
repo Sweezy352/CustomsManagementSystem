@@ -1,6 +1,7 @@
 package com.example.sweezcustoms.service.impl;
 
 import com.example.sweezcustoms.entity.UserEntity;
+import com.example.sweezcustoms.exceptions.AuthenticationException;
 import com.example.sweezcustoms.exceptions.IncorrectSubjectOrPassword;
 import com.example.sweezcustoms.exceptions.UserNotFoundException;
 import com.example.sweezcustoms.repository.UserRepository;
@@ -39,22 +40,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthenticationToken login(AuthenticationTokenRequest authenticationTokenRequest) {
-        UserEntity userEntity = (UserEntity) loadUserByUsername(authenticationTokenRequest.getUsername());
+        UserEntity userEntity = (UserEntity) loadUserByUsername(authenticationTokenRequest.getEmail());
         if(!passwordEncoder.matches(authenticationTokenRequest.getPassword(), userEntity.getPassword())) throw new IncorrectSubjectOrPassword("Incorrect username or password");
-        return new AuthenticationToken(jwtCore.generateToken(userEntity), null);
-    }
-
-    @Override
-    public void loginWithEmail(String email) {
-        UserEntity userEntity = userRepository.findByMail(email).orElseThrow(() -> new UserNotFoundException(""));
-        String code = UUID.randomUUID().toString();
-        redisTemplate.opsForValue().set(RESET_PREFIX + email, code, 10, TimeUnit.MINUTES);
-        String urlConfirmation =
-    }
-
-    @Override
-    public AuthenticationToken confirmCodeFromEmail(String code) {
-        return null;
+        return new AuthenticationToken(jwtCore.generateAccessToken(userEntity), jwtCore.generateRefreshToken(userEntity));
     }
 
     @Override
@@ -68,12 +56,21 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    public AuthenticationToken refreshToken(String refreshToken) {
+        if(!jwtCore.validationToken(refreshToken)) throw new AuthenticationException("error.refresh.token.expired");
+        String username = jwtCore.extractUsernameFromToken(refreshToken);
+        UserDetails userDetails = loadUserByUsername(username);
+        return new AuthenticationToken(jwtCore.generateAccessToken(userDetails), refreshToken);
+    }
+
+    @Override
     public UserEntity getCurrent() {
         return (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
+        System.out.println(username);
+        return userRepository.findByMail(username).orElseThrow(() -> new UserNotFoundException("error.user.notfound"));
     }
 }

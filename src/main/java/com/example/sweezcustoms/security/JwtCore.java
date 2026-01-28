@@ -26,6 +26,8 @@ public class JwtCore {
     private String jwtSecret;
     @Value("${jwt.exparation}")
     private Integer jwtExparation;
+    @Value("${refresh_token.exaration}")
+    private Integer refreshTokenExparation;
     private SecretKey secretKey;
 
     public SecretKey getSecretKey(){
@@ -37,17 +39,31 @@ public class JwtCore {
         return secretKey;
     }
 
-    public String generateToken(UserDetails userDetails){
+    public String generateAccessToken(UserDetails userDetails){
         UserEntity userEntity = (UserEntity) userDetails;
         Map<String, Object> claims = new HashMap<>();
         claims.put("username", userEntity.getUsername());
         claims.put("mail", userEntity.getMail());
         claims.put("phone", userEntity.getPhone());
+        return buildToken(claims, userDetails, jwtExparation);
+    }
+
+    public String generateRefreshToken(UserDetails userDetails){
+        UserEntity userEntity = (UserEntity) userDetails;
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("id", userEntity.getId());
+        claims.put("mail", userEntity.getMail());
+
+        return buildToken(claims, userDetails, refreshTokenExparation);
+    }
+
+
+    public String buildToken(Map<String, Object> claims, UserDetails userDetails, int expiration){
+        UserEntity userEntity = (UserEntity) userDetails;
         Date dateCreated = new Date();
-        Date dateExpiration = new Date(dateCreated.getTime() + jwtExparation);
-        return Jwts.builder()
-                .setClaims(claims)
-                .subject(userEntity.getUsername())
+        Date dateExpiration = new Date(dateCreated.getTime() + expiration);
+        return Jwts.builder().setClaims(claims)
+                .subject(userEntity.getMail())
                 .issuedAt(dateCreated)
                 .expiration(dateExpiration)
                 .signWith(getSecretKey())

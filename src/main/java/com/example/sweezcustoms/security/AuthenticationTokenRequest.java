@@ -13,12 +13,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthenticationTokenRequest {
-    @NotNull(message = "Username cannot be null")
-    @NotEmpty(message = "Username cannot be empty")
-    @NotBlank(message = "Username cannot be blank")
-    private String username;
-    @NotNull(message = "Password cannot be null")
-    @NotEmpty(message = "Password cannot be empty")
-    @NotBlank(message = "Password cannot be blank")
+    @NotNull(message = "{error.auth}")
+    @NotEmpty(message = "{error.auth}")
+    @NotBlank(message = "{error.auth}")
+    private String email;
+    @NotNull(message = "{error.auth}")
+    @NotEmpty(message = "{error.auth}")
+    @NotBlank(message = "{error.auth}")
     private String password;
 }
