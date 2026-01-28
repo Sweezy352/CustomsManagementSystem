@@ -46,7 +46,7 @@ public class AuthController {
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestParam String code, @Valid @RequestBody PasswordConfirmation passwordConfirmation) throws BaseException{
         authService.resetPassword(code, passwordConfirmation);
-        return ResponseEntity.ok().body("password.reset.succeed");
+        return ResponseEntity.ok().body("password.reset.succeedc");
     }
 
     @GetMapping("/test-tokens")
