@@ -1,16 +1,16 @@
 package com.example.sweezcustoms.service.impl;
 
 import com.example.sweezcustoms.entity.UserEntity;
-import com.example.sweezcustoms.exceptions.AuthenticationException;
-import com.example.sweezcustoms.exceptions.IncorrectSubjectOrPassword;
-import com.example.sweezcustoms.exceptions.UserNotFoundException;
+import com.example.sweezcustoms.exceptions.*;
 import com.example.sweezcustoms.repository.UserRepository;
 import com.example.sweezcustoms.security.AuthenticationToken;
 import com.example.sweezcustoms.security.AuthenticationTokenRequest;
 import com.example.sweezcustoms.security.JwtCore;
 import com.example.sweezcustoms.security.PasswordConfirmation;
 import com.example.sweezcustoms.service.AuthService;
+import com.example.sweezcustoms.service.MailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -28,9 +29,8 @@ public class AuthServiceImpl implements AuthService {
     private final JwtCore jwtCore;
     private final PasswordEncoder passwordEncoder;
     private final StringRedisTemplate redisTemplate;
+    private final MailService mailService;
     private static final String RESET_PREFIX = "mail_confirmation:";
-    private String urlConfirmation;
-    private String urlConfirmationPasswordReset;
 
     @Override
     public UserEntity register(UserEntity userEntity) {
@@ -47,12 +47,23 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void passwordRecovery(String email) {
-
+        UserEntity userEntity = (UserEntity) loadUserByUsername(email);
+        String code = UUID.randomUUID().toString();
+        redisTemplate.opsForValue().set(RESET_PREFIX + code, userEntity.getMail(), 15, TimeUnit.MINUTES);
+        Map<String, Object> variables = Map.of("code", code);
+        mailService.sendHtmlEmail(email, "", "password-reset", variables);
     }
 
+
     @Override
-    public AuthenticationToken resetPassword(String code, PasswordConfirmation passwordConfirmation) {
-        return null;
+    public void resetPassword(String code, PasswordConfirmation passwordConfirmation) {
+        if(!redisTemplate.hasKey(RESET_PREFIX + code)) throw new CodeConfirmationException("");
+        if(!passwordConfirmation.getNewPassword().equals(passwordConfirmation.getConfirmPassword())) throw new PasswordDoesNotMatchException("");
+        String email = redisTemplate.opsForValue().get(RESET_PREFIX + code);
+        UserEntity userEntity = (UserEntity) loadUserByUsername(email);
+        userEntity.setPassword(passwordEncoder.encode(passwordConfirmation.getNewPassword()));
+        userRepository.save(userEntity);
+        redisTemplate.delete(RESET_PREFIX + code);
     }
 
     @Override

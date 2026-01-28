@@ -10,7 +10,7 @@ public interface AuthService extends UserDetailsService {
     UserEntity register(UserEntity userEntity);
     AuthenticationToken login(AuthenticationTokenRequest authenticationTokenRequest);
     void passwordRecovery(String email);
-    AuthenticationToken resetPassword(String code, PasswordConfirmation passwordConfirmation);
+    void resetPassword(String code, PasswordConfirmation passwordConfirmation);
     AuthenticationToken refreshToken(String refreshToken);
     UserEntity getCurrent();
 }
