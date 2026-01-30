@@ -20,6 +20,10 @@ public class CompanyEntity extends Participant{
     private String name;
     @Column(name = "tin", nullable = false, unique = true)
     private String tin;
+    @Column(name = "okpo", nullable = false, unique = true)
+    private String okpo;
+    @Column(name = "customs_code", nullable = false, unique = true)
+    private String customsCode;
     @Column(name = "address", nullable = false)
     private String address;
     @Column(name = "status")

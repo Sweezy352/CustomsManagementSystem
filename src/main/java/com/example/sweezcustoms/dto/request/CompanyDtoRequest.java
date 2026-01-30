@@ -15,9 +15,6 @@ public class CompanyDtoRequest {
     @NotBlank(message = "{company.name.required}")
     @Size(min = 5, max = 30, message = "{company.name.size}")
     private String name;
-    @NotNull(message = "{tin.required}")
-    @NotBlank(message = "{tin.required}")
-    private String tin;
     @NotNull(message = "{address.required}")
     @NotBlank(message = "{address.required}")
     private String address;

@@ -13,4 +13,5 @@ public class ErrorBody {
     private String message;
     private int code;
     private Date date;
+
 }
