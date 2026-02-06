@@ -14,6 +14,8 @@ import java.util.List;
 public class UserDtoResponse {
     private Long id;
     private String mail;
+    private String firstName;
+    private String lastName;
     private String phone;
     private List<String> roles;
     private LocalDate createdAt;
