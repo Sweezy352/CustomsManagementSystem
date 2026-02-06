@@ -11,12 +11,18 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDtoRequest {
-    @NotNull(message = "{auth.username.notnull}")
-    @NotBlank(message = "{auth.username.notnull}")
-    private String username;
-    @NotNull(message = "{mail.required}")
     @NotBlank(message = "{mail.required}")
     private String mail;
+    @NotBlank(message = "{}")
+    private String firstName;
+    @NotBlank(message = "{}")
+    private String lastName;
+    @NotBlank(message = "{}")
+    @Size(min = 14, max = 14, message = "${}")
+    private String pin;
+    @NotNull(message = "{}")
+    @NotBlank(message = "{}")
+    private String passportNumber;
     @NotNull(message = "{phone.required}")
     @NotBlank(message = "{phone.required}")
     private String phone;
