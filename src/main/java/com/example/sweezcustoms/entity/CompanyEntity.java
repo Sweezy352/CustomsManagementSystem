@@ -3,6 +3,7 @@ package com.example.sweezcustoms.entity;
 import com.example.sweezcustoms.enums.CustomsStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,7 +13,7 @@ import java.util.List;
 @Table(name = "companies")
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class CompanyEntity extends Participant{
@@ -24,8 +25,6 @@ public class CompanyEntity extends Participant{
     private String okpo;
     @Column(name = "customs_code", nullable = false, unique = true)
     private String customsCode;
-    @Column(name = "address", nullable = false)
-    private String address;
     @Column(name = "status")
     private CustomsStatusEnum status;
     @Column(name = "created_at")

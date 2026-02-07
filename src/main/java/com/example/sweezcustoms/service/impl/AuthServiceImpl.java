@@ -9,6 +9,7 @@ import com.example.sweezcustoms.security.JwtCore;
 import com.example.sweezcustoms.security.PasswordConfirmation;
 import com.example.sweezcustoms.service.AuthService;
 import com.example.sweezcustoms.service.MailService;
+import com.example.sweezcustoms.utils.InternalizationHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -31,6 +32,7 @@ public class AuthServiceImpl implements AuthService {
     private final StringRedisTemplate redisTemplate;
     private final MailService mailService;
     private static final String RESET_PREFIX = "mail_confirmation:";
+    private final InternalizationHelper internalizationHelper;
 
     @Override
     public UserEntity register(UserEntity userEntity) {
@@ -48,10 +50,10 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void passwordRecovery(String email) {
         UserEntity userEntity = (UserEntity) loadUserByUsername(email);
-        String code = UUID.randomUUID().toString();
+        String code = String.format("%06d", (int) (Math.random() * 1000000));
         redisTemplate.opsForValue().set(RESET_PREFIX + code, userEntity.getMail(), 15, TimeUnit.MINUTES);
         Map<String, Object> variables = Map.of("code", code);
-        mailService.sendHtmlEmail(email, "", "password-reset", variables);
+        mailService.sendHtmlEmail(email, internalizationHelper.getTranslation("password.recovery"), "password-reset", variables);
     }
 
 

@@ -18,4 +18,6 @@ public interface CompanyRepository extends JpaRepository<CompanyEntity, Long> {
     Optional<CompanyEntity> findByOkpo(String okpo);
 
     Optional<CompanyEntity> findByCustomsCode(String customsCode);
+
+    boolean existsByName(String name);
 }

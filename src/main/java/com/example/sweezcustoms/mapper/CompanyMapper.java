@@ -26,18 +26,20 @@ public abstract class CompanyMapper {
     protected DeclarationMapper declarationMapper;
 
 
-
-    abstract CompanyEntity toEntity(CompanyDtoRequest companyDtoRequest);
+    public abstract CompanyEntity toEntity(CompanyDtoRequest companyDtoRequest);
 
     @Mapping(target = "companyDocumentDtoViews", source = "companyDocuments")
     @Mapping(target = "verifiedBy", expression = "java(userMapper.toDtoView(companyEntity.getVerifiedBy()))")
     @Mapping(target = "employees", expression = "java(userMapper.toDtoViewList(companyEntity.getEmployees()))")
     @Mapping(target = "declarationDtoViews", expression = "java(declarationMapper.toDtoViewList(companyEntity.getDeclarationEntities()))")
-    abstract CompanyDtoResponse toDtoResponse(CompanyEntity companyEntity);
+    @Mapping(target = "owner", expression = "java(userMapper.toDtoView(companyEntity.getOwner()))")
+    public abstract CompanyDtoResponse toDtoResponse(CompanyEntity companyEntity);
 
-    abstract List<CompanyDtoResponse> toDtoResponseList(List<CompanyEntity> companyEntities);
+    public abstract List<CompanyDtoResponse> toDtoResponseList(List<CompanyEntity> companyEntities);
 
-    abstract CompanyDtoView toDtoView(CompanyEntity companyEntity);
+    @Mapping(target = "owner", expression = "java(userMapper.toDtoView(companyEntity.getOwner()))")
+    public abstract CompanyDtoView toDtoView(CompanyEntity companyEntity);
 
-    abstract List<CompanyDtoView> toDtoViewList(List<CompanyEntity> companyEntities);
+    public abstract List<CompanyDtoView> toDtoViewList(List<CompanyEntity> companyEntities);
+
 }

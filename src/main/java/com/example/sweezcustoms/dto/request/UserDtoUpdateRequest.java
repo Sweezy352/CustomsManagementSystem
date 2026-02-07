@@ -11,9 +11,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class UserDtoUpdateRequest {
-    @NotNull(message = "{auth.username.notnull}")
-    @NotBlank(message = "{auth.username.notnull}")
-    private String username;
     @NotNull(message = "{mail.required}")
     @NotBlank(message = "{mail.required}")
     private String email;

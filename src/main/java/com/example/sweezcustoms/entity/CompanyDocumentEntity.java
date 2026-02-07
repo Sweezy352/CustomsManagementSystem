@@ -21,9 +21,8 @@ public class CompanyDocumentEntity extends BaseEntity{
     private CompanyEntity companyEntity;
     @Column(name = "document_type", nullable = false)
     private CompanyDocumentType companyDocumentType;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "file_id", referencedColumnName = "id", unique = true)
-    private FileStorage file;
+    @Column(name = "file_name", nullable = false, unique = true)
+    private String fileName;
     @Column(name = "uploaded_at")
     private LocalDateTime uploadedAt;
     @Column(name = "status", nullable = false)
@@ -33,6 +32,8 @@ public class CompanyDocumentEntity extends BaseEntity{
     private UserEntity verifiedBy;
     @Column(name = "verified_at")
     private LocalDateTime verifiedAt;
+    @Column(name = "language", nullable = false)
+    private String language;
 
     @PrePersist
     public void prePersist() {

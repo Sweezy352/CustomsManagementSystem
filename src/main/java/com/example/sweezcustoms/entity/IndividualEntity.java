@@ -23,8 +23,6 @@ public class IndividualEntity extends Participant{
     private String passportSeries;
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
-    @Column(name = "address", nullable = false)
-    private String address;
     @Column(name = "tin", nullable = false, unique = true)
     private String tin;
     @Column(name = "created_at")

@@ -1,10 +1,5 @@
 ALTER TABLE users DROP COLUMN IF EXISTS username;
-ALTER TABLE users ADD COLUMN IF NOT EXISTS first_name varchar;
-ALTER TABLE users ADD COLUMN IF NOT EXISTS last_name varchar;
-ALTER TABLE users ADD COLUMN IF NOT EXISTS pin varchar unique ;
-ALTER TABLE users ADD COLUMN IF NOT EXISTS passport_number varchar unique ;
-
-ALTER TABLE users ALTER COLUMN first_name SET NOT NULL;
-ALTER TABLE users ALTER COLUMN last_name SET NOT NULL;
-ALTER TABLE users ALTER COLUMN pin SET NOT NULL;
-ALTER TABLE users ALTER COLUMN passport_number SET NOT NULL;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS first_name varchar not null ;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS last_name varchar not null ;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS pin varchar unique not null ;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS passport_number varchar unique not null ;

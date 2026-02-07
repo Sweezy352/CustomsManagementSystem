@@ -11,6 +11,7 @@ import lombok.experimental.SuperBuilder;
 import java.util.List;
 
 @Entity
+@Table(name = "participants")
 @Inheritance(strategy = InheritanceType.JOINED)
 @SuperBuilder
 @NoArgsConstructor
@@ -18,13 +19,14 @@ import java.util.List;
 @Getter
 @Setter
 public abstract class Participant extends BaseEntity{
+    @Column(name = "address", nullable = false)
     protected String address;
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "participant")
-    private UserEntity owner;
+    protected UserEntity owner;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "participant")
-    private List<PaymentInvoiceEntity> paymentInvoices;
+    protected List<PaymentInvoiceEntity> paymentInvoices;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "participant")
-    private List<DeclarationEntity> declarationEntities;
+    protected List<DeclarationEntity> declarationEntities;
 
     abstract public String getType();
     abstract public String getTin();

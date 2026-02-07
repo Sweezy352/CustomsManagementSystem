@@ -12,7 +12,7 @@ public class BusinessIdentityGenerator {
     public String generateTin(){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("2");
-        stringBuilder.append(LocalDate.now().format(DateTimeFormatter.ofPattern("ddMMvvyy")));
+        stringBuilder.append(LocalDate.now().format(DateTimeFormatter.ofPattern("ddMMyy")));
         stringBuilder.append(String.format("%5d", new Random().nextInt(100000)));
         return stringBuilder.toString();
     }

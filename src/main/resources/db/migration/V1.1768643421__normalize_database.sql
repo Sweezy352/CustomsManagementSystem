@@ -9,12 +9,27 @@ ALTER TABLE companies ALTER COLUMN id DROP DEFAULT;
 
 DROP SEQUENCE IF EXISTS companies_id_seq CASCADE;
 
-ALTER TABLE companies ADD CONSTRAINT fk_companies_participants foreign key (id) references participants(id);
+
+DO $$
+    BEGIN
+        IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_companies_participants') THEN
+            ALTER TABLE companies
+                ADD CONSTRAINT fk_companies_participants
+                    FOREIGN KEY (id) REFERENCES participants(id);
+        END IF;
+    END $$;
 
 ALTER TABLE individuals ALTER COLUMN id DROP DEFAULT;
 
 DROP SEQUENCE IF EXISTS individuals_id_seq CASCADE;
 
-ALTER TABLE individuals ADD CONSTRAINT fk_individuals_participants foreign key (id) references participants(id);
+DO $$
+    BEGIN
+        IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_individuals_participants') THEN
+            ALTER TABLE individuals
+                ADD CONSTRAINT fk_individuals_participants
+                    FOREIGN KEY (id) REFERENCES participants(id);
+        END IF;
+    END $$;
 
-ALTER TABLE users ADD COLUMN participant_id bigint references participants(id);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS participant_id bigint references participants(id);

@@ -23,14 +23,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity getByUsernameOrMail(String query) {
-        return userRepository.findByUsernameOrMail(query, query).orElseThrow(() -> new UserNotFoundException("User not found"));
+    public UserEntity getByPinOrMail(String query) {
+        return userRepository.findByPinOrMail(query, query).orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
     @Override
     public UserEntity updateUser(UserDtoUpdateRequest userUpdated) {
         UserEntity currentUser = authService.getCurrent();
-        currentUser.setUsername(userUpdated.getUsername());
         currentUser.setMail(userUpdated.getEmail());
         currentUser.setPhone(userUpdated.getPhone());
         return userRepository.save(currentUser);

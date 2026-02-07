@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <style>
+        @page { size: A4; margin: 0; }
+        body {
+            font-family: "DejaVu Sans" ,'Arial', sans-serif;
+            margin: 0; padding: 0;
+            background-color: #ffffff;
+        }
+        .cert-card {
+            width: 180mm; height: 260mm;
+            margin: 10mm auto; padding: 15mm;
+            border: 15px double #1a2a6c;
+            position: relative;
+            background-image: radial-gradient(circle, #ffffff 0%, #f9f9f9 100%);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #1a2a6c;
+            padding-bottom: 20px; margin-bottom: 40px;
+        }
+        .logo {
+            font-size: 32px; font-weight: bold;
+            color: #1a2a6c; text-transform: uppercase; letter-spacing: 4px;
+        }
+        .gov-line {
+            font-size: 11px; color: #555; margin-top: 5px; font-weight: bold;
+        }
+        .main-title {
+            text-align: center; margin-bottom: 50px;
+        }
+        .main-title h1 {
+            font-size: 28px; color: #333; margin-bottom: 10px; text-transform: uppercase;
+        }
+        .main-title p {
+            font-size: 14px; color: #777; font-style: italic;
+        }
+        .data-table {
+            width: 100%; border-collapse: collapse; margin-top: 20px;
+        }
+        .data-table td {
+            padding: 15px 10px; border-bottom: 1px solid #e0e0e0;
+        }
+        .label-text {
+            font-weight: bold; color: #1a2a6c; display: block; font-size: 14px; text-transform: uppercase;
+        }
+        .value-text {
+            font-size: 16px; color: #222; font-weight: 500;
+        }
+        .customs-badge {
+            margin-top: 50px; background-color: #1a2a6c; color: white;
+            padding: 25px; text-align: center; border-radius: 5px;
+        }
+        .eori-label {
+            font-size: 12px; letter-spacing: 2px; margin-bottom: 10px; opacity: 0.9;
+        }
+        .eori-value {
+            font-family: 'Courier New', monospace; font-size: 24px; font-weight: bold;
+        }
+        .footer {
+            position: absolute; bottom: 40px; left: 50px; right: 50px;
+        }
+        .qr-section {
+            float: left; width: 150px;
+        }
+        .status-info {
+            font-size: 11px; color: #333; margin-top: 8px; line-height: 1.4;
+        }
+        .stamp-section {
+            float: right; border: 4px solid #1a2a6c; color: #1a2a6c;
+            padding: 10px 20px; font-weight: bold; text-align: center;
+            transform: rotate(-10deg); border-radius: 5px; opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+<div class="cert-card">
+    <div class="header">
+        <div class="logo">SWEEZ CUSTOMS</div>
+        <div class="gov-line" th:text="#{cert.gov_agency}">ГОСУДАРСТВЕННАЯ ТАМОЖЕННАЯ СЛУЖБА</div>
+    </div>
+
+    <div class="main-title">
+        <h1 th:text="#{cert.title}">СВИДЕТЕЛЬСТВО</h1>
+        <p th:text="#{cert.subtitle}">О регистрации участника ВЭД</p>
+    </div>
+
+    <table class="data-table">
+        <tr>
+            <td style="width: 40%;"><span class="label-text" th:text="#{cert.company_name}">Организация</span></td>
+            <td class="value-text" th:text="${company.name}">Sweez Solutions LLC</td>
+        </tr>
+        <tr>
+            <td><span class="label-text" th:text="#{cert.tin}">ИНН (TIN)</span></td>
+            <td class="value-text" th:text="${company.tin}">20101202612345</td>
+        </tr>
+        <tr>
+            <td><span class="label-text" th:text="#{cert.okpo}">ОКПО</span></td>
+            <td class="value-text" th:text="${company.okpo}">23456789</td>
+        </tr>
+        <tr>
+            <td><span class="label-text" th:text="#{cert.address}">Юридический адрес</span></td>
+            <td class="value-text" th:text="${company.address}">Bishkek, Chuy Ave 123</td>
+        </tr>
+    </table>
+
+    <div class="customs-badge">
+        <div class="eori-label" th:text="#{cert.customs_code_label}">УНИКАЛЬНЫЙ ТАМОЖЕННЫЙ КОД</div>
+        <div class="eori-value" th:text="${company.customsCode}">KG-20101202612345-SWZ</div>
+    </div>
+
+    <div class="footer">
+        <div class="qr-section">
+            <div style="width: 70px; height: 70px; margin-bottom: 5px;">
+                <img th:src="${qrCodeBase64}" width="70" height="70" alt="QR Code"/>
+            </div>
+            <div class="status-info">
+                <strong th:text="#{cert.status_label}">Статус:</strong> <span th:text="#{cert.status_value}">АКТИВЕН</span><br/>
+                <strong th:text="#{cert.issue_date_label}">Выдан:</strong> <span th:text="${#temporals.format(issueDate, 'dd.MM.yyyy')}">30.01.2026</span>
+            </div>
+        </div>
+
+        <div class="stamp-section">
+            <span th:text="#{cert.stamp_text}">ВЕРИФИЦИРОВАНО<br/>СИСТЕМОЙ</span>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

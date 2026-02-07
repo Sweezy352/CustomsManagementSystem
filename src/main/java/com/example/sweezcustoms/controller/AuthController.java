@@ -8,6 +8,7 @@ import com.example.sweezcustoms.security.AuthenticationToken;
 import com.example.sweezcustoms.security.AuthenticationTokenRequest;
 import com.example.sweezcustoms.security.PasswordConfirmation;
 import com.example.sweezcustoms.service.AuthService;
+import com.example.sweezcustoms.utils.InternalizationHelper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final AuthService authService;
     private final UserMapper userMapper;
+    private final InternalizationHelper internalizationHelper;
 
     @PostMapping("/register")
     public ResponseEntity<UserDtoResponse> register(@Valid @RequestBody UserDtoRequest userDtoRequest) throws BaseException {
@@ -46,7 +48,7 @@ public class AuthController {
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestParam String code, @Valid @RequestBody PasswordConfirmation passwordConfirmation) throws BaseException{
         authService.resetPassword(code, passwordConfirmation);
-        return ResponseEntity.ok().body("password.reset.succeed");
+        return ResponseEntity.ok().body(internalizationHelper.getTranslation("password.reset.succeed"));
     }
 
     @GetMapping("/test-tokens")

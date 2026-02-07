@@ -26,7 +26,7 @@ public class UserController {
 
     @GetMapping("/get-by-email")
     public ResponseEntity<UserDtoView> getUserByEmail(@RequestParam String email){
-        return ResponseEntity.ok(userMapper.toDtoView(userService.getByUsernameOrMail(email)));
+        return ResponseEntity.ok(userMapper.toDtoView(userService.getByPinOrMail(email)));
     }
 
     @PutMapping("/update-user-info")

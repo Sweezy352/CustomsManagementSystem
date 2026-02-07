@@ -1,5 +1,14 @@
 
-ALTER TABLE users ADD CONSTRAINT uq_users_participant_id unique (participant_id);
+
+DO $$
+    BEGIN
+        IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'uq_users_participant_id') THEN
+            ALTER TABLE users
+                ADD CONSTRAINT uq_users_participant_id
+                    UNIQUE (participant_id);
+        END IF;
+    END $$;
+
 
 ALTER TABLE payment_invoices DROP COLUMN IF EXISTS company_id;
 

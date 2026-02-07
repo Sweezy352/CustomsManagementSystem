@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserService {
     UserEntity getById(Long id);
-    UserEntity getByUsernameOrMail(String query);
+    UserEntity getByPinOrMail(String query);
     UserEntity updateUser(UserDtoUpdateRequest userUpdated);
     List<UserEntity> getAllUsers();
 
