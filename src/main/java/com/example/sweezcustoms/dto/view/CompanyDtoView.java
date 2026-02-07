@@ -13,4 +13,5 @@ public class CompanyDtoView {
     private String name;
     private String tin;
     private CustomsStatusEnum status;
+    private UserDtoView owner;
 }

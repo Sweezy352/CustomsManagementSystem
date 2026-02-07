@@ -31,6 +31,7 @@ public class MailServiceImpl implements MailService {
             MimeMessageHelper messageHelper = new MimeMessageHelper(message, "UTF-8");
 
             Context context = new Context(LocaleContextHolder.getLocale());
+            context.setVariables(variables);
 
             String html = templateEngine.process(htmlContent, context);
             messageHelper.setTo(to);
@@ -40,7 +41,7 @@ public class MailServiceImpl implements MailService {
 
             mailSender.send(message);
         }catch (Exception e){
-            throw new MailSendingException("");
+            throw new MailSendingException(e.getMessage());
         }
     }
 }

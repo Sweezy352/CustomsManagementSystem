@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 @Service
@@ -60,6 +61,25 @@ public class MinIoServiceImpl implements MinIoService {
             throw new RuntimeException(ex.getMessage());
         }
     }
+
+    @Override
+    public void uploadWithBytes(String bucketName, byte[] bytes, String fileName, String contentType) {
+        try{
+            minioClient.putObject(PutObjectArgs.builder().bucket(bucketName).object(fileName).stream(new ByteArrayInputStream(bytes), bytes.length, -1).build());
+        }catch (Exception ex){
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public byte[] downloadFile(String bucketName, String fileName) {
+        try{
+            return minioClient.getObject(GetObjectArgs.builder().bucket(bucketName).object(fileName).build()).readAllBytes();
+        }catch (Exception ex){
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
 
     private void ensureBucketExists(String bucketName){
         try {

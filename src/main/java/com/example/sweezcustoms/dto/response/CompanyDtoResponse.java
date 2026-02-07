@@ -26,4 +26,5 @@ public class CompanyDtoResponse {
     private List<UserDtoView> employees;
     private List<CompanyDocumentDtoView> companyDocumentDtoViews;
     private List<DeclarationDtoView> declarationDtoViews;
+    private UserDtoView owner;
 }

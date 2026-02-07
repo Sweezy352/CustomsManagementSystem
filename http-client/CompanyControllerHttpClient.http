@@ -1,0 +1,36 @@
+@auth_token = eyJhbGciOiJIUzUxMiJ9.eyJtYWlsIjoiZGF1dG92LjI5MjAwOUBnbWFpbC5jb20iLCJwaG9uZSI6IjAyMjA0NDIzNDIzNCIsInVzZXJuYW1lIjoiZGF1dG92LjI5MjAwOUBnbWFpbC5jb20iLCJzdWIiOiJkYXV0b3YuMjkyMDA5QGdtYWlsLmNvbSIsImlhdCI6MTc3MDIxODQzMSwiZXhwIjoxNzcwMjE4NTUxfQ.mC_u5oLbNMKMxJnk-BSQOaymKmCQdU0zajL9njOrZYxGIG9ZyGQBpknhTyGm4WxopYmOxl9Tjqn9TMdj5saDYQ
+
+
+###
+POST http://localhost:8080/api/company/create-company
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJtYWlsIjoidXNlcl8xQGdtYWlsLmNvbSIsInBob25lIjoiMDIyMDQ0MjM0MjM0IiwidXNlcm5hbWUiOiJ1c2VyXzFAZ21haWwuY29tIiwic3ViIjoidXNlcl8xQGdtYWlsLmNvbSIsImlhdCI6MTc2OTk1NzA3NiwiZXhwIjoxNzY5OTU3MTk2fQ.c9ltKr0cRY7kycB0ZCs53ZRL3uOOTPsOOmQdSBiHeQyFXoooKnxjWvYh0TwdBdmJNaSdJhGloANoQSENfYrSYQ
+
+{
+  "name": "Nyrs corparation",
+  "address": "Мухосранск"
+}
+
+###
+GET http://localhost:8080/api/company/get-by-id/8
+Authorization: Bearer {{auth_token}}
+
+###
+GET http://localhost:8080/api/company/get-by-company-name?
+    companyName=
+Authorization: Bearer {{auth_token}}
+
+###
+GET http://localhost:8080/api/company/get-employees-company/{{id}}
+Authorization: Bearer {{auth_token}}
+
+###
+GET http://localhost:8080/api/company/get-by-tin?
+    companyTin=
+Authorization: Bearer {{auth_token}}
+
+
+###
+GET http://localhost:8080/api/company/get-by-okpo?
+    companyOkpo=
+Authorization: Bearer {{auth_token}}

@@ -1,8 +1,10 @@
 package com.example.sweezcustoms.service.impl;
 
+import com.example.sweezcustoms.dto.request.UserDtoUpdateRequest;
 import com.example.sweezcustoms.entity.UserEntity;
 import com.example.sweezcustoms.exceptions.UserNotFoundException;
 import com.example.sweezcustoms.repository.UserRepository;
+import com.example.sweezcustoms.service.AuthService;
 import com.example.sweezcustoms.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final AuthService authService;
 
     @Override
     public UserEntity getById(Long id) {
@@ -20,13 +23,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity getByUsernameOrMail(String query) {
-        return userRepository.findByUsernameOrMail(query, query).orElseThrow(() -> new UserNotFoundException("User not found"));
+    public UserEntity getByPinOrMail(String query) {
+        return userRepository.findByPinOrMail(query, query).orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
     @Override
-    public UserEntity updateUser(UserEntity userEntity) {
-        return userRepository.save(userEntity);
+    public UserEntity updateUser(UserDtoUpdateRequest userUpdated) {
+        UserEntity currentUser = authService.getCurrent();
+        currentUser.setMail(userUpdated.getEmail());
+        currentUser.setPhone(userUpdated.getPhone());
+        return userRepository.save(currentUser);
     }
 
     @Override

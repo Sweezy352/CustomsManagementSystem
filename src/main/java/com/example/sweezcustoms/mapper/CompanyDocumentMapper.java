@@ -23,7 +23,7 @@ public abstract class CompanyDocumentMapper {
 
     abstract CompanyDocumentEntity toEntity(CompanyDocumentDtoRequest companyDocumentDtoRequest);
 
-    @Mapping(target = "companyDtoView", source = "companyEntity")
+    @Mapping(target = "companyDtoView", expression = "java(companyMapper.toDtoView(companyDocumentEntity.getCompanyEntity()))")
     @Mapping(target = "verifiedBy", expression = "java(userMapper.toDtoView(companyDocumentEntity.getVerifiedBy()))")
     abstract CompanyDocumentDtoResponse toDtoResponse(CompanyDocumentEntity companyDocumentEntity);
 

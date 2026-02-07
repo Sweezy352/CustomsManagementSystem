@@ -20,4 +20,12 @@ public class InternalizationHelper {
             return key;
         }
     }
+
+    public String getTranslation(String key, Locale locale, Object... args){
+        try {
+            return messageSource.getMessage(key, args, locale);
+        } catch (Exception e) {
+            return key;
+        }
+    }
 }

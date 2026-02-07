@@ -13,4 +13,11 @@ public interface CompanyRepository extends JpaRepository<CompanyEntity, Long> {
     Optional<CompanyEntity> findByName(String name);
     Optional<List<CompanyEntity>> findByStatus(CustomsStatusEnum status);
 
+    Optional<CompanyEntity> findByTin(String tin);
+
+    Optional<CompanyEntity> findByOkpo(String okpo);
+
+    Optional<CompanyEntity> findByCustomsCode(String customsCode);
+
+    boolean existsByName(String name);
 }
