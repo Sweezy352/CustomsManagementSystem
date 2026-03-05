@@ -5,19 +5,6 @@ CREATE TABLE IF NOT EXISTS participants(
     tin varchar(50)
 );
 
-ALTER TABLE companies ALTER COLUMN id DROP DEFAULT;
-
-DROP SEQUENCE IF EXISTS companies_id_seq CASCADE;
-
-
-DO $$
-    BEGIN
-        IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_companies_participants') THEN
-            ALTER TABLE companies
-                ADD CONSTRAINT fk_companies_participants
-                    FOREIGN KEY (id) REFERENCES participants(id);
-        END IF;
-    END $$;
 
 ALTER TABLE individuals ALTER COLUMN id DROP DEFAULT;
 

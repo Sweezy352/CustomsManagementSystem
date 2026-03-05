@@ -16,7 +16,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CompanyEntity extends Participant{
+public class CompanyEntity extends BaseEntity{
     @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "tin", nullable = false, unique = true)
@@ -40,6 +40,13 @@ public class CompanyEntity extends Participant{
     private List<CompanyDocumentEntity> companyDocuments;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "companyEntity")
     private List<BranchCompanyEntity> branchCompanyEntities;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    private UserEntity owner;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "companyEntity")
+    private List<ContractEntity> contractEntities;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "companyEntity")
+    private List<CompanyDeclaration> companyDeclarations;
 
     @PrePersist
     public void prePersist() {
@@ -47,18 +54,4 @@ public class CompanyEntity extends Participant{
         createdAt = LocalDateTime.now();
     }
 
-    @Override
-    public String getType() {
-        return name;
-    }
-
-    @Override
-    public String getTin() {
-        return tin;
-    }
-
-    @Override
-    public CustomsStatusEnum getStatus() {
-        return status;
-    }
 }

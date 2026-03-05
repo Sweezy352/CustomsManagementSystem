@@ -29,7 +29,8 @@ import java.util.Map;
 @PropertySource("classpath:custom-urls.properties")
 @Transactional
 public class CompanyDocumentServiceImpl implements CompanyDocumentService {
-    private String bucketName = "company-documents";
+    @Value("${minio.bucket.name.company-documents}")
+    private String bucketName;
     private final PdfGenerator pdfGenerator;
     private final QrCodeService qrCodeService;
     private final SpringTemplateEngine templateEngine;

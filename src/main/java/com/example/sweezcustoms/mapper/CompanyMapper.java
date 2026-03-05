@@ -21,9 +21,6 @@ public abstract class CompanyMapper {
     @Autowired
     @Lazy
     protected CompanyDocumentMapper companyDocumentMapper;
-    @Autowired
-    @Lazy
-    protected DeclarationMapper declarationMapper;
 
 
     public abstract CompanyEntity toEntity(CompanyDtoRequest companyDtoRequest);
@@ -31,7 +28,7 @@ public abstract class CompanyMapper {
     @Mapping(target = "companyDocumentDtoViews", source = "companyDocuments")
     @Mapping(target = "verifiedBy", expression = "java(userMapper.toDtoView(companyEntity.getVerifiedBy()))")
     @Mapping(target = "employees", expression = "java(userMapper.toDtoViewList(companyEntity.getEmployees()))")
-    @Mapping(target = "declarationDtoViews", expression = "java(declarationMapper.toDtoViewList(companyEntity.getDeclarationEntities()))")
+    //@Mapping(target = "declarationDtoViews", expression = "java(declarationMapper.toDtoViewList(companyEntity.getDeclarationEntities()))")
     @Mapping(target = "owner", expression = "java(userMapper.toDtoView(companyEntity.getOwner()))")
     public abstract CompanyDtoResponse toDtoResponse(CompanyEntity companyEntity);
 

@@ -1,6 +1,6 @@
 package com.example.sweezcustoms.dto.response;
 
-import com.example.sweezcustoms.dto.view.ParticipantDto;
+import com.example.sweezcustoms.dto.view.CompanyDtoView;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -14,10 +14,9 @@ import java.util.List;
 public class UserDtoResponse {
     private Long id;
     private String mail;
-    private String firstName;
-    private String lastName;
+    private String fullName;
     private String phone;
     private List<String> roles;
     private LocalDate createdAt;
-    private ParticipantDto participantDto;
+    private CompanyDtoView companyDtoView;
 }

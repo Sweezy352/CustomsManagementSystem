@@ -13,10 +13,6 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public abstract class IndividualDocumentMapper {
-
-    @Autowired
-    @Lazy
-    protected IndividualMapper individualMapper;
     @Autowired
     @Lazy
     protected UserMapper userMapper;
@@ -24,7 +20,7 @@ public abstract class IndividualDocumentMapper {
 
     abstract IndividualDocumentEntity toEntity(IndividualDocumentDtoRequest individualDocumentDtoRequest);
 
-    @Mapping(target = "individualDtoView", expression = "java(individualMapper.toDtoView(individualDocumentEntity.getIndividualEntity()))")
+    @Mapping(target = "userDtoView", expression = "java(userMapper.toDtoView(individualDocumentEntity.getUserEntity()))")
     @Mapping(target = "verifiedBy", expression = "java(userMapper.toDtoView(individualDocumentEntity.getVerifiedBy()))")
     abstract IndividualDocumentDtoResponse toDtoResponse(IndividualDocumentEntity individualDocumentEntity);
 

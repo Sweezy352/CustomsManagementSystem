@@ -20,14 +20,14 @@ import java.util.List;
 public class UserEntity extends BaseEntity implements UserDetails {
     @Column(name = "mail", nullable = false, unique = true)
     private String mail;
-    @Column(name = "first_name", nullable = false)
-    private String firstName;
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
+    @Column(name = "full_name", nullable = false)
+    private String fullName;
     @Column(name = "pin", nullable = false, unique = true)
     private String pin;
     @Column(name = "passport_number", nullable = false, unique = true)
     private String passportNumber;
+    @Column(name = "birth_date", nullable = false)
+    private LocalDate birthDate;
     @Column(name = "phone", nullable = false, unique = true)
     private String phone;
     @Column(name = "password", nullable = false)
@@ -44,9 +44,13 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     private CompanyEntity companyEntity;
 
-    @OneToOne
-    @JoinColumn(name = "participant_id", referencedColumnName = "id")
-    private Participant participant;
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "owner")
+    private CompanyEntity companyOwn;
+    @Column(name = "photo_profile_s3", nullable = false, unique = true)
+    private String photoProfileS3;
+    @Column(name = "signature_s3", nullable = false, unique = true)
+    private String signatureS3;
+
 
     @PrePersist
     public void prePersist(){

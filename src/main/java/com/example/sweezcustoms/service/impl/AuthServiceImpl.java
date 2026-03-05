@@ -9,7 +9,10 @@ import com.example.sweezcustoms.security.JwtCore;
 import com.example.sweezcustoms.security.PasswordConfirmation;
 import com.example.sweezcustoms.service.AuthService;
 import com.example.sweezcustoms.service.MailService;
+import com.example.sweezcustoms.service.PhotoProfileService;
+import com.example.sweezcustoms.service.SignatureService;
 import com.example.sweezcustoms.utils.InternalizationHelper;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -18,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 import java.util.UUID;
@@ -33,9 +37,15 @@ public class AuthServiceImpl implements AuthService {
     private final MailService mailService;
     private static final String RESET_PREFIX = "mail_confirmation:";
     private final InternalizationHelper internalizationHelper;
+    private final SignatureService signatureService;
+    private final PhotoProfileService photoProfileService;
 
     @Override
-    public UserEntity register(UserEntity userEntity) {
+    @Transactional
+    public UserEntity register(UserEntity userEntity, MultipartFile profilePicture, MultipartFile signature) {
+        System.out.println("fewofwpfwjfep______>>>>>> " + userEntity.getBirthDate());
+        userEntity.setPhotoProfileS3(photoProfileService.uploadPhoto(profilePicture));
+        userEntity.setSignatureS3(signatureService.uploadSignature(signature));
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         return userRepository.save(userEntity);
     }

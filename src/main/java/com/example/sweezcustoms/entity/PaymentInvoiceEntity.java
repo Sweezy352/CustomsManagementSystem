@@ -18,13 +18,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaymentInvoiceEntity extends BaseEntity {
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "participant_id", referencedColumnName = "id")
-    private Participant participant;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "declaration_id", referencedColumnName = "id")
-    private DeclarationEntity declarationEntity;
     @Column(name = "status")
     private PaymentStatusEnum paymentStatus;
     @Column(name = "total_invoice_nds", nullable = false)
@@ -41,8 +34,9 @@ public class PaymentInvoiceEntity extends BaseEntity {
     private LocalDateTime dateToPay;
     @Column(name = "date_paid")
     private LocalDateTime datePaid;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "paymentInvoice")
-    private List<InvoiceDescriptionEntity> invoiceDescriptions;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "declaration_id", referencedColumnName = "id")
+    private DeclarationEntity declarationEntity;
 
     @PrePersist
     public void prePersist() {

@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -25,8 +26,10 @@ public class AuthController {
     private final InternalizationHelper internalizationHelper;
 
     @PostMapping("/register")
-    public ResponseEntity<UserDtoResponse> register(@Valid @RequestBody UserDtoRequest userDtoRequest) throws BaseException {
-        return ResponseEntity.ok(userMapper.toDtoResponse(authService.register(userMapper.toEntity(userDtoRequest))));
+    public ResponseEntity<UserDtoResponse> register(@Valid @RequestPart("userDtoRequest") UserDtoRequest userDtoRequest , @RequestParam MultipartFile photoUser, @RequestParam MultipartFile signatureUser) throws BaseException {
+        System.out.println("CONTROLERRRRRRR>>>>>> " + userDtoRequest.getBirthDate());
+
+        return ResponseEntity.ok(userMapper.toDtoResponse(authService.register(userMapper.toEntity(userDtoRequest), photoUser, signatureUser)));
     }
 
     @PostMapping("/login")

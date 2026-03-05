@@ -1,7 +1,7 @@
 package com.example.sweezcustoms.dto.response;
 
+import com.example.sweezcustoms.dto.view.CompanyDeclarationDtoView;
 import com.example.sweezcustoms.dto.view.CompanyDocumentDtoView;
-import com.example.sweezcustoms.dto.view.DeclarationDtoView;
 import com.example.sweezcustoms.dto.view.UserDtoView;
 import com.example.sweezcustoms.enums.CustomsStatusEnum;
 import lombok.*;
@@ -18,6 +18,8 @@ public class CompanyDtoResponse {
     private Long id;
     private String name;
     private String tin;
+    private String okpo;
+    private String customsCode;
     private String address;
     private CustomsStatusEnum status;
     private LocalDateTime createdAt;
@@ -25,6 +27,6 @@ public class CompanyDtoResponse {
     private LocalDateTime verifiedAt;
     private List<UserDtoView> employees;
     private List<CompanyDocumentDtoView> companyDocumentDtoViews;
-    private List<DeclarationDtoView> declarationDtoViews;
+    private List<CompanyDeclarationDtoView> declarationDtoViews;
     private UserDtoView owner;
 }

@@ -17,13 +17,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class IndividualDocumentEntity extends BaseEntity{
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "individual_id", referencedColumnName = "id")
-    private IndividualEntity individualEntity;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private UserEntity userEntity;
     @Column(name = "document_type", nullable = false)
     private IndividualDocumentType individualDocumentType;
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "file_id", referencedColumnName = "id", unique = true)
-    private FileStorage file;
     @Column(name = "uploaded_at")
     private LocalDateTime uploadedAt;
     @Column(name = "status", nullable = false)

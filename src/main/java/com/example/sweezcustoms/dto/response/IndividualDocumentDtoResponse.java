@@ -1,6 +1,5 @@
 package com.example.sweezcustoms.dto.response;
 
-import com.example.sweezcustoms.dto.view.IndividualDtoView;
 import com.example.sweezcustoms.dto.view.UserDtoView;
 import com.example.sweezcustoms.enums.CustomsStatusEnum;
 import com.example.sweezcustoms.enums.IndividualDocumentType;
@@ -15,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class IndividualDocumentDtoResponse {
     private Long id;
-    private IndividualDtoView individualDtoView;
+    private UserDtoView userDtoView;
     private IndividualDocumentType individualDocumentType;
     private Long fileId;
     private LocalDateTime uploadedAt;
