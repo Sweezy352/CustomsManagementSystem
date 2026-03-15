@@ -35,7 +35,8 @@ public class CompanyServiceImpl implements CompanyService {
 
         UserEntity userEntity = authService.getCurrent();
         companyEntity.setOwner(userEntity);
-        userEntity.getRoles().add(roleRepository.findByRoleName("OWNER").orElseThrow(() -> new RuntimeException("Role not found")));
+        userEntity.getRoles().add(roleRepository.findByRoleName("OWNER")
+                .orElseThrow(() -> new RuntimeException("Role not found")));
 
         companyEntity.setTin(businessIdentityGenerator.generateTin());
         companyEntity.setOkpo(businessIdentityGenerator.generateOkpo());
@@ -48,12 +49,14 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyEntity getCompanyById(Long id) {
-        return companyRepository.findById(id).orElseThrow(() -> new CompanyNotFoundException("company.not.found"));
+        return companyRepository.findById(id)
+                .orElseThrow(() -> new CompanyNotFoundException("company.not.found"));
     }
 
     @Override
     public CompanyEntity getByCompanyName(String name) {
-        return companyRepository.findByName(name).orElseThrow(() -> new CompanyNotFoundException("company.not.found"));
+        return companyRepository.findByName(name)
+                .orElseThrow(() -> new CompanyNotFoundException("company.not.found"));
     }
 
     @Override
@@ -65,16 +68,19 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyEntity getCompanyByTin(String tin) {
-        return companyRepository.findByTin(tin).orElseThrow(() -> new CompanyNotFoundException("company.not.found"));
+        return companyRepository.findByTin(tin)
+                .orElseThrow(() -> new CompanyNotFoundException("company.not.found"));
     }
 
     @Override
     public CompanyEntity getCompanyByOkpo(String okpo) {
-        return companyRepository.findByOkpo(okpo).orElseThrow(() -> new CompanyNotFoundException("company.not.found"));
+        return companyRepository.findByOkpo(okpo)
+                .orElseThrow(() -> new CompanyNotFoundException("company.not.found"));
     }
 
     @Override
     public CompanyEntity getCompanyByCustomsCode(String customsCode) {
-        return companyRepository.findByCustomsCode(customsCode).orElseThrow(() -> new CompanyNotFoundException("company.not.found"));
+        return companyRepository.findByCustomsCode(customsCode)
+                .orElseThrow(() -> new CompanyNotFoundException("company.not.found"));
     }
 }

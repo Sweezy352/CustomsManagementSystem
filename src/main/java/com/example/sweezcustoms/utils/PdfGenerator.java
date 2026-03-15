@@ -32,7 +32,12 @@ public class PdfGenerator {
         }
     }
 
-    public byte[] generateCertificate(Map<String, Object> variables, String documentType, String lang, String qrCodeUrl){
+    public byte[] generateCertificate(
+            Map<String, Object> variables,
+            String documentType,
+            String lang,
+            String qrCodeUrl
+    ){
         Locale locale = Locale.forLanguageTag(lang);
         Context context = new Context(locale);
         try {

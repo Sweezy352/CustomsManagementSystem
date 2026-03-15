@@ -20,7 +20,12 @@ public class SignatureServiceImpl implements SignatureService {
     public String uploadSignature(MultipartFile signature) {
         try {
             String uniqueSignatureName = String.format("signature-%d.png", System.currentTimeMillis());
-            minIoService.uploadWithBytes(bucketName, signature.getBytes(), uniqueSignatureName, signature.getContentType());
+            minIoService.uploadWithBytes(
+                    bucketName,
+                    signature.getBytes(),
+                    uniqueSignatureName,
+                    signature.getContentType()
+            );
             return uniqueSignatureName;
         }catch (IOException ex){
             throw new RuntimeException(ex.getMessage());

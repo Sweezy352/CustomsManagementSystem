@@ -21,7 +21,11 @@ public class MinIoServiceImpl implements MinIoService {
             ensureBucketExists(bucketName);
             minioClient.putObject(
                 PutObjectArgs.builder()
-                        .bucket(bucketName).stream(multipartFile.getInputStream(), multipartFile.getSize(), -1).contentType(multipartFile.getContentType()).build());
+                        .bucket(bucketName).stream(
+                                multipartFile.getInputStream(),
+                                multipartFile.getSize(),
+                                -1
+                        ).contentType(multipartFile.getContentType()).build());
         }catch (Exception ex){
             throw new RuntimeException(ex.getMessage());
         }
@@ -39,7 +43,12 @@ public class MinIoServiceImpl implements MinIoService {
     @Override
     public String getContentType(String bucketName, String fileName) {
         try{
-            StatObjectResponse statObjectResponse = minioClient.statObject(StatObjectArgs.builder().bucket(bucketName).object(fileName).build());
+            StatObjectResponse statObjectResponse = minioClient.statObject(
+                    StatObjectArgs.builder()
+                            .bucket(bucketName)
+                            .object(fileName)
+                            .build()
+            );
             return statObjectResponse.contentType();
         }catch (Exception ex){
             throw new RuntimeException(ex.getMessage());
@@ -49,7 +58,10 @@ public class MinIoServiceImpl implements MinIoService {
     @Override
     public boolean fileExists(String bucketName, String fileName) {
         try{
-            minioClient.statObject(StatObjectArgs.builder().bucket(bucketName).object(fileName).build());
+            minioClient.statObject(StatObjectArgs.builder()
+                    .bucket(bucketName)
+                    .object(fileName)
+                    .build());
             return true;
         }catch (ErrorResponseException ex){
             if(ex.errorResponse().code().equals("NoSuchKey")){
@@ -65,7 +77,14 @@ public class MinIoServiceImpl implements MinIoService {
     @Override
     public void uploadWithBytes(String bucketName, byte[] bytes, String fileName, String contentType) {
         try{
-            minioClient.putObject(PutObjectArgs.builder().bucket(bucketName).object(fileName).stream(new ByteArrayInputStream(bytes), bytes.length, -1).build());
+            minioClient.putObject(
+                    PutObjectArgs.builder()
+                    .bucket(bucketName)
+                    .object(fileName)
+                    .stream(new ByteArrayInputStream(bytes),
+                            bytes.length,
+                            -1).build()
+            );
         }catch (Exception ex){
             throw new RuntimeException(ex.getMessage());
         }
@@ -74,7 +93,12 @@ public class MinIoServiceImpl implements MinIoService {
     @Override
     public byte[] downloadFile(String bucketName, String fileName) {
         try{
-            return minioClient.getObject(GetObjectArgs.builder().bucket(bucketName).object(fileName).build()).readAllBytes();
+            return minioClient.getObject(
+                    GetObjectArgs.builder().
+                            bucket(bucketName)
+                            .object(fileName)
+                            .build()
+            ).readAllBytes();
         }catch (Exception ex){
             throw new RuntimeException(ex.getMessage());
         }
@@ -83,7 +107,11 @@ public class MinIoServiceImpl implements MinIoService {
 
     private void ensureBucketExists(String bucketName){
         try {
-            boolean found = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
+            boolean found = minioClient.bucketExists(
+                    BucketExistsArgs.builder()
+                            .bucket(bucketName)
+                            .build()
+            );
             if(!found){
                 minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
             }

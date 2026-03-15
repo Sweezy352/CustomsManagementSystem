@@ -23,7 +23,12 @@ public class PhotoProfileServiceImpl implements PhotoProfileService {
         try {
             String extension = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
             String uniqueFileName = String.format("profile-picture_%d.%s",System.currentTimeMillis(), extension);
-            minIoService.uploadWithBytes(bucketName, multipartFile.getBytes(), uniqueFileName, multipartFile.getContentType());
+            minIoService.uploadWithBytes(
+                    bucketName,
+                    multipartFile.getBytes(),
+                    uniqueFileName,
+                    multipartFile.getContentType()
+            );
             return uniqueFileName;
         }catch (IOException ex){
             throw new RuntimeException(ex.getMessage());

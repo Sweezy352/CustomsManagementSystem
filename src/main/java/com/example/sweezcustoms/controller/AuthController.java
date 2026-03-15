@@ -26,14 +26,24 @@ public class AuthController {
     private final InternalizationHelper internalizationHelper;
 
     @PostMapping("/register")
-    public ResponseEntity<UserDtoResponse> register(@Valid @RequestPart("userDtoRequest") UserDtoRequest userDtoRequest , @RequestParam MultipartFile photoUser, @RequestParam MultipartFile signatureUser) throws BaseException {
+    public ResponseEntity<UserDtoResponse> register(
+            @Valid @RequestPart("userDtoRequest") UserDtoRequest userDtoRequest,
+            @RequestParam MultipartFile photoUser,
+            @RequestParam MultipartFile signatureUser
+    ) throws BaseException {
         System.out.println("CONTROLERRRRRRR>>>>>> " + userDtoRequest.getBirthDate());
 
-        return ResponseEntity.ok(userMapper.toDtoResponse(authService.register(userMapper.toEntity(userDtoRequest), photoUser, signatureUser)));
+        return ResponseEntity.ok(
+                userMapper.toDtoResponse(
+                        authService.register(userMapper.toEntity(userDtoRequest), photoUser, signatureUser)
+                )
+        );
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationToken> login(@Valid @RequestBody AuthenticationTokenRequest authenticationTokenRequest) throws BaseException{
+    public ResponseEntity<AuthenticationToken> login(
+            @Valid @RequestBody AuthenticationTokenRequest authenticationTokenRequest
+    ) throws BaseException{
         return ResponseEntity.ok(authService.login(authenticationTokenRequest));
     }
 
@@ -49,7 +59,10 @@ public class AuthController {
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<?> resetPassword(@RequestParam String code, @Valid @RequestBody PasswordConfirmation passwordConfirmation) throws BaseException{
+    public ResponseEntity<?> resetPassword(
+            @RequestParam String code,
+            @Valid @RequestBody PasswordConfirmation passwordConfirmation
+    ) throws BaseException{
         authService.resetPassword(code, passwordConfirmation);
         return ResponseEntity.ok().body(internalizationHelper.getTranslation("password.reset.succeed"));
     }

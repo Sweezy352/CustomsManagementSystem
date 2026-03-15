@@ -18,7 +18,14 @@ public class LocaleConfig {
     public LocaleResolver localeResolver(){
         AcceptHeaderLocaleResolver acceptHeaderLocaleResolver = new AcceptHeaderLocaleResolver();
         acceptHeaderLocaleResolver.setDefaultLocale(new Locale("ru"));
-        acceptHeaderLocaleResolver.setSupportedLocales(List.of(new Locale("kg"), new Locale("en"), new Locale("ru")));
+
+        acceptHeaderLocaleResolver.setSupportedLocales(
+                List.of(
+                        new Locale("kg"),
+                        new Locale("en"),
+                        new Locale("ru")
+                )
+        );
         return acceptHeaderLocaleResolver;
     }
 

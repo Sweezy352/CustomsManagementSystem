@@ -25,8 +25,16 @@ public class CompanyDocumentController {
 
     @GetMapping("/get-document-registration")
     @PreAuthorize("@spEL.canAccessCompany(#companyTin, 'companyTin')")
-    public ResponseEntity<byte[]> getDocumentRegistration(@RequestParam String companyTin, @RequestParam String documentType, @RequestParam String language){
-        byte[] pdfBytes = companyDocumentService.getCertificateDocument(companyService.getCompanyByTin(companyTin), CompanyDocumentType.valueOf(documentType) , language);
+    public ResponseEntity<byte[]> getDocumentRegistration(
+            @RequestParam String companyTin,
+            @RequestParam String documentType,
+            @RequestParam String language
+    ){
+        byte[] pdfBytes = companyDocumentService.getCertificateDocument(
+                companyService.getCompanyByTin(companyTin),
+                CompanyDocumentType.valueOf(documentType),
+                language
+        );
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
         headers.setContentDisposition(ContentDisposition.attachment().filename("certificate.pdf").build());

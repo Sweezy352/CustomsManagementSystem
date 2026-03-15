@@ -32,9 +32,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
     private String phone;
     @Column(name = "password", nullable = false)
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "m2m_users_roles", joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "userEntities")
     private List<RoleEntity> roles;
 
     @Column(name = "created_at")

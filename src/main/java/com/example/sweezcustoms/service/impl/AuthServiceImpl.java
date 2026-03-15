@@ -53,24 +53,41 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthenticationToken login(AuthenticationTokenRequest authenticationTokenRequest) {
         UserEntity userEntity = (UserEntity) loadUserByUsername(authenticationTokenRequest.getEmail());
-        if(!passwordEncoder.matches(authenticationTokenRequest.getPassword(), userEntity.getPassword())) throw new IncorrectSubjectOrPassword("Incorrect username or password");
-        return new AuthenticationToken(jwtCore.generateAccessToken(userEntity), jwtCore.generateRefreshToken(userEntity));
+        if(!passwordEncoder.matches(
+                authenticationTokenRequest.getPassword(),
+                userEntity.getPassword())
+        ) throw new IncorrectSubjectOrPassword("Incorrect username or password");
+        return new AuthenticationToken(
+                jwtCore.generateAccessToken(userEntity),
+                jwtCore.generateRefreshToken(userEntity)
+        );
     }
 
     @Override
     public void passwordRecovery(String email) {
         UserEntity userEntity = (UserEntity) loadUserByUsername(email);
         String code = String.format("%06d", (int) (Math.random() * 1000000));
-        redisTemplate.opsForValue().set(RESET_PREFIX + code, userEntity.getMail(), 15, TimeUnit.MINUTES);
+
+        redisTemplate.opsForValue().set(
+                RESET_PREFIX + code,
+                userEntity.getMail(),
+                15,
+                TimeUnit.MINUTES
+        );
         Map<String, Object> variables = Map.of("code", code);
-        mailService.sendHtmlEmail(email, internalizationHelper.getTranslation("password.recovery"), "password-reset", variables);
+        mailService.sendHtmlEmail(
+                email,
+                internalizationHelper.getTranslation("password.recovery"),
+                "password-reset", variables
+        );
     }
 
 
     @Override
     public void resetPassword(String code, PasswordConfirmation passwordConfirmation) {
         if(!redisTemplate.hasKey(RESET_PREFIX + code)) throw new CodeConfirmationException("");
-        if(!passwordConfirmation.getNewPassword().equals(passwordConfirmation.getConfirmPassword())) throw new PasswordDoesNotMatchException("");
+        if(!passwordConfirmation.getNewPassword().equals(passwordConfirmation.getConfirmPassword()))
+            throw new PasswordDoesNotMatchException("");
         String email = redisTemplate.opsForValue().get(RESET_PREFIX + code);
         UserEntity userEntity = (UserEntity) loadUserByUsername(email);
         userEntity.setPassword(passwordEncoder.encode(passwordConfirmation.getNewPassword()));
@@ -80,7 +97,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthenticationToken refreshToken(String refreshToken) {
-        if(!jwtCore.validationToken(refreshToken)) throw new AuthenticationException("error.refresh.token.expired");
+        if(!jwtCore.validationToken(refreshToken))
+            throw new AuthenticationException("error.refresh.token.expired");
         String username = jwtCore.extractUsernameFromToken(refreshToken);
         UserDetails userDetails = loadUserByUsername(username);
         return new AuthenticationToken(jwtCore.generateAccessToken(userDetails), refreshToken);

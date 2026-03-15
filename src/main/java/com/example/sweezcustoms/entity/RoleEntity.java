@@ -1,8 +1,6 @@
 package com.example.sweezcustoms.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +19,9 @@ import java.util.List;
 @AllArgsConstructor
 public class RoleEntity extends BaseEntity implements GrantedAuthority {
     private String roleName;
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "m2m_users_roles", joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<UserEntity> userEntities;
 
     @Override
