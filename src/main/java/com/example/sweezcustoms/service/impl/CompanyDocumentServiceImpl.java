@@ -29,7 +29,8 @@ import java.util.Map;
 @PropertySource("classpath:custom-urls.properties")
 @Transactional
 public class CompanyDocumentServiceImpl implements CompanyDocumentService {
-    private String bucketName = "company-documents";
+    @Value("${minio.bucket.name.company-documents}")
+    private String bucketName;
     private final PdfGenerator pdfGenerator;
     private final QrCodeService qrCodeService;
     private final SpringTemplateEngine templateEngine;
@@ -64,11 +65,23 @@ public class CompanyDocumentServiceImpl implements CompanyDocumentService {
         variables.put("company", companyEntity);
         variables.put("issueDate", companyEntity.getVerifiedAt());
 
-        byte[] pdfGenerated = pdfGenerator.generateCertificate(variables, companyDocumentType.name(), lang, documentVerificationAddress);
+        byte[] pdfGenerated = pdfGenerator.generateCertificate(
+                variables,
+                companyDocumentType.name(),
+                lang,
+                documentVerificationAddress
+        );
 
         String objectName = String.format("companies_%d_cert_%s.pdf", companyEntity.getId(), lang);
         minIoService.uploadWithBytes(bucketName, pdfGenerated, objectName, "application/pdf");
-        CompanyDocumentEntity companyDocumentEntity = CompanyDocumentEntity.builder().companyDocumentType(companyDocumentType).companyEntity(companyEntity).fileName(objectName).status(CustomsStatusEnum.APPROVED).language(lang).build();
+        CompanyDocumentEntity companyDocumentEntity = CompanyDocumentEntity
+                .builder()
+                .companyDocumentType(companyDocumentType)
+                .companyEntity(companyEntity)
+                .fileName(objectName)
+                .status(CustomsStatusEnum.APPROVED)
+                .language(lang)
+                .build();
         companyDocumentRepository.save(companyDocumentEntity);
 
         return pdfGenerated;

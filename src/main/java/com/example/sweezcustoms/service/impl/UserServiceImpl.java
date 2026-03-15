@@ -19,12 +19,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity getById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
     @Override
     public UserEntity getByPinOrMail(String query) {
-        return userRepository.findByPinOrMail(query, query).orElseThrow(() -> new UserNotFoundException("User not found"));
+        return userRepository.findByPinOrMail(query, query)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
     @Override

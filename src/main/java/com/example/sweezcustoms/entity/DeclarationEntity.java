@@ -1,45 +1,48 @@
 package com.example.sweezcustoms.entity;
 
+import com.example.sweezcustoms.enums.CurrencyEnum;
 import com.example.sweezcustoms.enums.CustomsStatusEnum;
-import com.example.sweezcustoms.enums.DeclarationTypeEnum;
-import com.example.sweezcustoms.exceptions.BothFieldNullPointerException;
+import com.example.sweezcustoms.enums.DeclarationDocumentType;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "declarations")
+@Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeclarationEntity extends BaseEntity{
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "participant_id", referencedColumnName = "id")
-    private Participant participant;
-    @Column(name = "type", nullable = false)
-    private DeclarationTypeEnum type;
+public abstract class DeclarationEntity extends BaseEntity{
+    @Column(name = "document_type", nullable = false)
+    protected DeclarationDocumentType documentType;
     @Column(name = "status")
-    private CustomsStatusEnum status;
+    protected CustomsStatusEnum status;
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
-    @Column(name = "verified_at")
-    private LocalDateTime verifiedAt;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "verified_by", referencedColumnName = "id")
-    private UserEntity verifiedBy;
+    protected LocalDateTime createdAt;
+    @Column(name = "submitted_at")
+    protected LocalDateTime submittedAt;
+    @Column(name = "currency", nullable = false)
+    protected CurrencyEnum currency;
+    @Column(name = "currency_rate", nullable = false)
+    protected BigDecimal currencyRate;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "declarationEntity")
-    private List<DeclarationProductEntity> declarationProducts;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "declarationEntity")
-    private List<PaymentInvoiceEntity> paymentInvoices;
+    protected List<DeclarationProduct> declarationProducts;
+    @Column(name = "file_name", unique = true)
+    protected String fileName;
+
 
     @PrePersist
-    public void prePersist() {
+    public void prePersist(){
         status = CustomsStatusEnum.DRAFT;
         createdAt = LocalDateTime.now();
     }

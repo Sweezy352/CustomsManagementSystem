@@ -1,8 +1,5 @@
 package com.example.sweezcustoms.dto.response;
 
-import com.example.sweezcustoms.dto.view.CompanyDtoView;
-import com.example.sweezcustoms.dto.view.DeclarationDtoView;
-import com.example.sweezcustoms.dto.view.ParticipantDto;
 import com.example.sweezcustoms.enums.PaymentStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,8 +15,6 @@ import java.time.LocalDateTime;
 @Setter
 public class PaymentInvoiceDtoResponse {
     private Long id;
-    private ParticipantDto participantDto;
-    private DeclarationDtoView declarationDtoView;
     private PaymentStatusEnum paymentStatus;
     private BigDecimal totalInvoiceNds;
     private BigDecimal totalInvoiceCustomsDuty;

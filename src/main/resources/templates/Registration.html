@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweez Customs - Регистрация Физ. Лица</title>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+    <style>
+        :root {
+            --primary: #3498db;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --bg: #f4f7f9;
+            --dark: #2c3e50;
+        }
+
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+
+        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 600px; }
+
+        h2 { text-align: center; color: var(--dark); margin-bottom: 25px; border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .full-width { grid-column: span 2; }
+
+        .input-group { margin-bottom: 12px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #555; font-size: 13px; }
+
+        input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; outline: none; transition: all 0.3s; }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 5px rgba(52, 152, 219, 0.3); }
+
+        /* Стили холста подписи */
+        .signature-container { border: 2px dashed #bdc3c7; border-radius: 8px; background: #fff; margin: 5px 0; position: relative; overflow: hidden; }
+        #signature-canvas { width: 100%; height: 160px; display: block; cursor: crosshair; }
+
+        .controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .btn-clear { background: var(--danger); color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 11px; }
+
+        .btn-submit { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 8px; width: 100%; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .btn-submit:hover { background: #2980b9; transform: translateY(-1px); }
+        .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
+
+        #response-box { margin-top: 20px; padding: 15px; border-radius: 6px; display: none; font-size: 13px; white-space: pre-wrap; word-break: break-all; }
+        .error { background: #fdeaea; color: #c0392b; border: 1px solid #f5c6cb; }
+        .success { background: #e9f7ef; color: #27ae60; border: 1px solid #c3e6cb; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Регистрация в Sweez Customs</h2>
+    <form id="registerForm">
+        <div class="grid">
+            <div class="input-group full-width">
+                <label>Полное имя (ФИО)</label>
+                <input type="text" id="fullName" placeholder="Иван Иванович Иванов" required>
+            </div>
+
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" id="mail" placeholder="test@mail.kg" required>
+            </div>
+
+            <div class="input-group">
+                <label>Телефон</label>
+                <input type="text" id="phone" placeholder="+996 700 123 456" required>
+            </div>
+
+            <div class="input-group">
+                <label>Дата рождения</label>
+                <input type="date" id="birthDate" required>
+            </div>
+
+            <div class="input-group">
+                <label>ПИН (14 цифр)</label>
+                <input type="text" id="pin" minlength="14" maxlength="14" placeholder="12345678901234" required>
+            </div>
+
+            <div class="input-group">
+                <label>№ Паспорта</label>
+                <input type="text" id="passportNumber" placeholder="ID1234567" required>
+            </div>
+
+            <div class="input-group">
+                <label>Пароль (5-15 символов)</label>
+                <input type="password" id="password" minlength="5" maxlength="15" required>
+            </div>
+
+            <div class="input-group full-width">
+                <label>Роль в системе</label>
+                <input type="text" id="roleName" value="USER" readonly style="background: #f9f9f9;">
+            </div>
+        </div>
+
+        <div class="input-group full-width" style="margin-top: 10px;">
+            <label>Фотография (photoUser)</label>
+            <input type="file" id="photoUser" accept="image/*" required>
+        </div>
+
+        <div class="input-group full-width">
+            <label>Электронная подпись (нарисуйте в рамке)</label>
+            <div class="signature-container">
+                <canvas id="signature-canvas"></canvas>
+            </div>
+            <div class="controls">
+                <span style="font-size: 11px; color: #888;">Используйте мышь или сенсорный экран</span>
+                <button type="button" class="btn-clear" id="clearBtn">Очистить</button>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">Зарегистрироваться</button>
+    </form>
+
+    <div id="response-box"></div>
+</div>
+
+<script>
+    // --- 1. Настройка Signature Pad ---
+    const canvas = document.getElementById('signature-canvas');
+    const signaturePad = new SignaturePad(canvas, {
+        backgroundColor: 'rgba(255, 255, 255, 0)',
+        penColor: 'rgb(0, 0, 0)'
+    });
+
+    // Функция корректировки размера холста
+    function resizeCanvas() {
+        const ratio = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        canvas.getContext("2d").scale(ratio, ratio);
+        signaturePad.clear();
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    document.getElementById('clearBtn').addEventListener('click', () => signaturePad.clear());
+
+    // --- 2. Логика отправки данных ---
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const responseBox = document.getElementById('response-box');
+        const submitBtn = document.getElementById('submitBtn');
+
+        if (signaturePad.isEmpty()) {
+            alert("Пожалуйста, поставьте подпись перед отправкой.");
+            return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Обработка...";
+        responseBox.style.display = 'none';
+
+        const formData = new FormData();
+
+        // Формируем JSON (соответствует твоему UserDtoRequest)
+        const userDto = {
+            mail: document.getElementById('mail').value,
+            fullName: document.getElementById('fullName').value,
+            pin: document.getElementById('pin').value,
+            passportNumber: document.getElementById('passportNumber').value,
+            phone: document.getElementById('phone').value,
+            password: document.getElementById('password').value,
+            roleName: document.getElementById('roleName').value,
+            birthDate: document.getElementById('birthDate').value // Формат YYYY-MM-DD
+        };
+
+        // Добавляем JSON часть с указанием типа application/json для @RequestPart
+        formData.append('userDtoRequest', new Blob([JSON.stringify(userDto)], { type: 'application/json' }));
+
+        // Добавляем файл фото
+        const photoFileInput = document.getElementById('photoUser');
+        if (photoFileInput.files.length > 0) {
+            formData.append('photoUser', photoFileInput.files[0]);
+        }
+
+        // Конвертируем подпись в PNG Blob и добавляем
+        const signatureBlob = await new Promise(resolve => {
+            canvas.toBlob(blob => resolve(blob), 'image/png');
+        });
+        // Генерируем уникальное имя для подписи на стороне клиента
+        const uniqueSigName = "signature-" + Date.now() + ".png";
+        formData.append('signatureUser', signatureBlob, uniqueSigName);
+
+        try {
+            // URL твоего контроллера
+            const response = await fetch('http://localhost:8080/api/auth/register', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+            responseBox.style.display = 'block';
+
+            if (response.ok) {
+                responseBox.className = 'success';
+                responseBox.innerText = "Успешная регистрация!\n" + JSON.stringify(result, null, 2);
+            } else {
+                responseBox.className = 'error';
+                responseBox.innerText = "Ошибка " + response.status + ":\n" + JSON.stringify(result, null, 2);
+            }
+        } catch (error) {
+            responseBox.style.display = 'block';
+            responseBox.className = 'error';
+            responseBox.innerText = "Ошибка соединения: " + error.message + "\nУбедитесь, что сервер запущен и CORS разрешен.";
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Зарегистрироваться";
+        }
+    });
+
+    // Ограничение даты рождения (нельзя выбрать будущее)
+    document.getElementById('birthDate').max = new Date().toISOString().split("T")[0];
+</script>
+
+</body>
+</html>

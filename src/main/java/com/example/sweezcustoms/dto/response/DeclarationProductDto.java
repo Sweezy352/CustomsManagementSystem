@@ -1,7 +1,5 @@
-package com.example.sweezcustoms.dto.request;
+package com.example.sweezcustoms.dto.response;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -10,17 +8,14 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class DeclarationProductDtoRequest {
-    @NotNull(message = "{product.name.required}")
-    @NotBlank(message = "{product.name.required}")
+@AllArgsConstructor
+public class DeclarationProductDto {
+    private Long id;
     private String productName;
     private String productDescription;
     private String productMaterials;
     private String tnvedCode;
-    @NotNull(message = "{product.quantity.required}")
-    @NotBlank(message = "{product.quantity.required}")
     private BigDecimal quantity;
     private String unitType;
     private BigDecimal weightNetto;
@@ -28,5 +23,4 @@ public class DeclarationProductDtoRequest {
     private BigDecimal pricePerUnit;
     private BigDecimal totalPrice;
     private LocalDateTime createdAt;
-
 }

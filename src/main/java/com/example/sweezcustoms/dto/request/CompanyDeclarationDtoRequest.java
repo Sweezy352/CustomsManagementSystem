@@ -12,8 +12,15 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeclarationDtoRequest {
+public class CompanyDeclarationDtoRequest {
     @NotNull(message = "{declaration.type.required}")
     @NotBlank(message = "{declaration.type.required}")
-    private DeclarationTypeEnum declarationTypeEnum;
+    private DeclarationTypeEnum declarationType;
+    private String currency;
+    private String invoiceNumber;
+    private String invoiceDate;
+    private String incotermsCode;
+    private String incotermsPlace;
+    private String transportType;
+    private String transportId;
 }

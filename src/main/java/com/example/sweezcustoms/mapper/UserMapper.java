@@ -3,9 +3,6 @@ package com.example.sweezcustoms.mapper;
 import com.example.sweezcustoms.dto.request.UserDtoRequest;
 import com.example.sweezcustoms.dto.response.UserDtoResponse;
 import com.example.sweezcustoms.dto.view.UserDtoView;
-import com.example.sweezcustoms.dto.view.ParticipantDto;
-import com.example.sweezcustoms.entity.CompanyEntity;
-import com.example.sweezcustoms.entity.IndividualEntity;
 import com.example.sweezcustoms.entity.RoleEntity;
 import com.example.sweezcustoms.entity.UserEntity;
 import org.mapstruct.Mapper;
@@ -23,17 +20,15 @@ public abstract class UserMapper {
     @Lazy
     protected CompanyMapper companyMapper;
     @Autowired
-    @Lazy
-    protected IndividualMapper individualMapper;
-    @Autowired
     protected RoleMapper roleMapper;
 
 
     @Mapping(target = "roles", expression = "java(roleMapper.mapRole(request.getRoleName()))")
+    @Mapping(target = "birthDate", source = "birthDate", dateFormat = "yyyy-MM-dd")
     abstract public UserEntity toEntity(UserDtoRequest request);
 
     @Mapping(target = "roles", source = "roles", qualifiedByName = "mapListRoles")
-    @Mapping(target = "participantDto", expression = "java(ParticipantMapper.toParticipantDto(userEntity.getParticipant()))")
+    @Mapping(target = "companyDtoView", expression = "java(companyMapper.toDtoView(userEntity.getCompanyOwn()))")
     abstract public UserDtoResponse toDtoResponse(UserEntity userEntity);
 
     abstract public List<UserDtoResponse> toDtoResponseList(List<UserEntity> userEntities);

@@ -24,9 +24,15 @@ public class CompanyController {
     private final UserMapper userMapper;
 
     @PostMapping("/create-company")
-    public ResponseEntity<CompanyDtoResponse> createCompany(@Valid @RequestBody CompanyDtoRequest companyDtoRequest){
+    public ResponseEntity<CompanyDtoResponse> createCompany(
+            @Valid @RequestBody CompanyDtoRequest companyDtoRequest
+    ){
         System.out.println(companyDtoRequest.getAddress());
-        return ResponseEntity.ok(companyMapper.toDtoResponse(companyService.createCompany(companyMapper.toEntity(companyDtoRequest))));
+        return ResponseEntity.ok(
+                companyMapper.toDtoResponse(
+                        companyService.createCompany(companyMapper.toEntity(companyDtoRequest))
+                )
+        );
     }
 
 
@@ -59,6 +65,10 @@ public class CompanyController {
 
     @GetMapping("/get-by-customs-code")
     public ResponseEntity<CompanyDtoView> getCompanyByCustomsCode(@RequestParam String companyCustomsCode){
-        return ResponseEntity.ok(companyMapper.toDtoView(companyService.getCompanyByCustomsCode(companyCustomsCode)));
+        return ResponseEntity.ok(
+                companyMapper.toDtoView(
+                        companyService.getCompanyByCustomsCode(companyCustomsCode)
+                )
+        );
     }
 }

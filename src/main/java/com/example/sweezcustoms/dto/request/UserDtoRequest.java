@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @Builder
@@ -13,16 +15,16 @@ import lombok.*;
 public class UserDtoRequest {
     @NotBlank(message = "{mail.required}")
     private String mail;
-    @NotBlank(message = "{}")
-    private String firstName;
-    @NotBlank(message = "{}")
-    private String lastName;
+    @NotBlank(message = "{full_name.required}")
+    private String fullName;
     @NotBlank(message = "{}")
     @Size(min = 14, max = 14, message = "${}")
     private String pin;
     @NotNull(message = "{}")
     @NotBlank(message = "{}")
     private String passportNumber;
+    @NotNull(message = "{}")
+    private LocalDate birthDate;
     @NotNull(message = "{phone.required}")
     @NotBlank(message = "{phone.required}")
     private String phone;

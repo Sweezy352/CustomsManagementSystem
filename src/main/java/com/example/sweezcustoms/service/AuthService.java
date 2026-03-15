@@ -5,9 +5,10 @@ import com.example.sweezcustoms.security.AuthenticationToken;
 import com.example.sweezcustoms.security.AuthenticationTokenRequest;
 import com.example.sweezcustoms.security.PasswordConfirmation;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface AuthService extends UserDetailsService {
-    UserEntity register(UserEntity userEntity);
+    UserEntity register(UserEntity userEntity, MultipartFile profilePicture, MultipartFile signature);
     AuthenticationToken login(AuthenticationTokenRequest authenticationTokenRequest);
     void passwordRecovery(String email);
     void resetPassword(String code, PasswordConfirmation passwordConfirmation);

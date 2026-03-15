@@ -12,8 +12,7 @@ import java.util.List;
 public class UserDtoView {
     private Long id;
     private String mail;
-    private String firstName;
-    private String lastName;
+    private String fullName;
     private String phone;
     private List<String> roles;
 }
