@@ -23,30 +23,30 @@ public class DeclarationProduct extends BaseEntity{
     private DeclarationEntity declarationEntity;
     @Column(name = "product_name", nullable = false)
     private String productName;
-    @Column(name = "product_description", nullable = false)
+    @Column(name = "product_description")
     private String productDescription;
-    @Column(name = "product_materials", nullable = false)
+    @Column(name = "product_materials")
     private String productMaterials;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tnved_code", referencedColumnName = "id")
     private TnvedCodeEntity tnvedCode;
     @Column(name = "quantity", nullable = false)
     private BigDecimal quantity;
-    @Column(name = "unit_type", nullable = false)
+    @Column(name = "unit_type")
     private String unitType;
-    @Column(name = "weight_netto", nullable = false)
+    @Column(name = "weight_netto")
     private BigDecimal weightNetto;
-    @Column(name = "weight_brutto", nullable = false)
+    @Column(name = "weight_brutto")
     private BigDecimal weightBrutto;
-    @Column(name = "price_per_unit", nullable = false)
+    @Column(name = "price_per_unit")
     private BigDecimal pricePerUnit;
-    @Column(name = "total_price", nullable = false)
+    @Column(name = "total_price")
     private BigDecimal totalPrice;
-    @Column(name = "nds", nullable = false)
+    @Column(name = "nds")
     private BigDecimal nds;
-    @Column(name = "customs_duty", nullable = false)
+    @Column(name = "customs_duty")
     private BigDecimal customsDuty;
-    @Column(name = "excise", nullable = false)
+    @Column(name = "excise")
     private BigDecimal excise;
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;

@@ -8,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "company_declarations")
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class CompanyDeclaration extends DeclarationEntity{
@@ -18,17 +18,17 @@ public class CompanyDeclaration extends DeclarationEntity{
     @ManyToOne
     @JoinColumn(name = "contract_id", referencedColumnName = "id")
     private ContractEntity contractEntity;
-    @Column(name = "invoice_number", nullable = false, unique = true)
+    @Column(name = "invoice_number")
     private String invoiceNumber;
-    @Column(name = "invoice_date", nullable = false)
+    @Column(name = "invoice_date")
     private String invoiceDate;
-    @Column(name = "incoterms_code", nullable = false)
+    @Column(name = "incoterms_code")
     private String incotermsCode;
-    @Column(name = "incoterms_place", nullable = false)
+    @Column(name = "incoterms_place")
     private String incotermsPlace;
-    @Column(name = "transport_type", nullable = false)
+    @Column(name = "transport_type")
     private String transportType;
-    @Column(name = "transport_id", nullable = false)
+    @Column(name = "transport_id")
     private String transportId;
 
 }

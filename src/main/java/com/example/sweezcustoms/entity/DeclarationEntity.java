@@ -4,10 +4,7 @@ import com.example.sweezcustoms.enums.CurrencyEnum;
 import com.example.sweezcustoms.enums.CustomsStatusEnum;
 import com.example.sweezcustoms.enums.DeclarationDocumentType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
@@ -22,8 +19,9 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public abstract class DeclarationEntity extends BaseEntity{
-    @Column(name = "document_type", nullable = false)
+    @Column(name = "document_type")
     protected DeclarationDocumentType documentType;
     @Column(name = "status")
     protected CustomsStatusEnum status;
@@ -31,9 +29,9 @@ public abstract class DeclarationEntity extends BaseEntity{
     protected LocalDateTime createdAt;
     @Column(name = "submitted_at")
     protected LocalDateTime submittedAt;
-    @Column(name = "currency", nullable = false)
+    @Column(name = "currency")
     protected CurrencyEnum currency;
-    @Column(name = "currency_rate", nullable = false)
+    @Column(name = "currency_rate")
     protected BigDecimal currencyRate;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "declarationEntity")
     protected List<DeclarationProduct> declarationProducts;

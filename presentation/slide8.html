@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  width:1280px; height:720px; overflow:hidden;
+  font-family:'Segoe UI',Arial,sans-serif;
+  background:#ffffff;
+  position:relative;
+}
+
+/* Большой цветной блок слева */
+.left-block {
+  position:absolute; left:0; top:0; bottom:0; width:500px;
+  background:linear-gradient(160deg, #0f3460 0%, #1a1a2e 100%);
+}
+.left-block::after {
+  content:'';
+  position:absolute; right:-50px; top:0; bottom:0; width:100px;
+  background:linear-gradient(160deg, #0f3460 0%, #1a1a2e 100%);
+  clip-path:polygon(0 0, 50% 0, 100% 100%, 0 100%);
+}
+
+/* Декоративные элементы на левом блоке */
+.deco-circle1 {
+  position:absolute; width:300px; height:300px; border-radius:50%;
+  background:rgba(52,152,219,0.15); top:-80px; left:-80px;
+}
+.deco-circle2 {
+  position:absolute; width:200px; height:200px; border-radius:50%;
+  background:rgba(245,166,35,0.1); bottom:40px; right:60px;
+}
+
+/* Левый контент */
+.left-content {
+  position:absolute; left:0; top:0; bottom:0; width:480px;
+  z-index:2; padding:60px 50px;
+  display:flex; flex-direction:column; justify-content:center;
+}
+.slide-num { font-size:11px; font-weight:700; letter-spacing:3px; color:rgba(255,255,255,0.3); text-transform:uppercase; margin-bottom:16px; }
+.left-content h1 { font-size:44px; font-weight:900; color:#fff; line-height:1.1; margin-bottom:16px; }
+.left-content h1 em { font-style:normal; color:#f5a623; }
+.left-content p { font-size:15px; color:rgba(255,255,255,0.55); line-height:1.7; margin-bottom:32px; }
+
+.cta-box {
+  background:linear-gradient(135deg,#f5a623,#e67e22);
+  border-radius:14px; padding:18px 22px;
+  display:flex; align-items:center; gap:14px;
+}
+.cta-icon { font-size:32px; }
+.cta-text h3 { font-size:16px; font-weight:800; color:#fff; margin-bottom:3px; }
+.cta-text p  { font-size:12px; color:rgba(255,255,255,0.8); }
+
+/* Правый контент */
+.right-content {
+  position:absolute; left:540px; right:40px; top:0; bottom:0;
+  display:flex; flex-direction:column; justify-content:center;
+  gap:16px; z-index:2;
+}
+
+/* Большие цифры */
+.big-stats {
+  display:grid; grid-template-columns:1fr 1fr; gap:14px;
+  margin-bottom:4px;
+}
+.stat-card {
+  border-radius:16px; padding:20px 22px;
+  position:relative; overflow:hidden;
+}
+.sc1 { background:linear-gradient(135deg,#3498db,#2980b9); }
+.sc2 { background:linear-gradient(135deg,#2ecc71,#27ae60); }
+.sc3 { background:linear-gradient(135deg,#9b59b6,#8e44ad); }
+.sc4 { background:linear-gradient(135deg,#e94560,#c0392b); }
+
+.stat-card .big-num {
+  font-size:52px; font-weight:900; color:#fff;
+  line-height:1; margin-bottom:4px;
+}
+.stat-card .stat-label { font-size:13px; font-weight:700; color:rgba(255,255,255,0.85); margin-bottom:4px; }
+.stat-card .stat-desc  { font-size:11px; color:rgba(255,255,255,0.6); line-height:1.4; }
+.stat-card .deco {
+  position:absolute; right:-10px; bottom:-10px;
+  font-size:60px; opacity:0.15; line-height:1;
+}
+
+/* Нижние плашки */
+.bottom-pills {
+  display:flex; gap:10px;
+}
+.pill {
+  flex:1; background:#f8fafc; border:2px solid #e2e8f0;
+  border-radius:12px; padding:12px 14px;
+  display:flex; align-items:center; gap:10px;
+}
+.pill .p-icon { font-size:20px; }
+.pill h4 { font-size:12px; font-weight:700; color:#1a1a2e; margin-bottom:2px; }
+.pill p  { font-size:11px; color:#6b7280; }
+
+/* Нижняя полоса */
+.bottom-bar {
+  position:absolute; bottom:0; left:0; right:0; height:6px;
+  background:linear-gradient(90deg,#e94560,#f5a623,#2ecc71,#3498db,#9b59b6);
+}
+</style>
+</head>
+<body>
+<div class="left-block">
+  <div class="deco-circle1"></div>
+  <div class="deco-circle2"></div>
+</div>
+
+<div class="left-content">
+  <div class="slide-num">08 / 08</div>
+  <h1>SweezCustoms —<br>новый <em>стандарт</em><br>таможни КР</h1>
+  <p>Быстро, прозрачно, без бумаг — для компаний, физлиц и государства</p>
+  <div class="cta-box">
+    <div class="cta-icon">🛃</div>
+    <div class="cta-text">
+      <h3>Готово к использованию</h3>
+      <p>Система полностью разработана и готова к запуску</p>
+    </div>
+  </div>
+</div>
+
+<div class="right-content">
+  <div class="big-stats">
+    <div class="stat-card sc1">
+      <div class="big-num">5 мин</div>
+      <div class="stat-label">Подача декларации</div>
+      <div class="stat-desc">Вместо недель хождения по кабинетам</div>
+      <div class="deco">⚡</div>
+    </div>
+    <div class="stat-card sc2">
+      <div class="big-num">100%</div>
+      <div class="stat-label">Точность расчётов</div>
+      <div class="stat-desc">Налоги считает система — без ошибок</div>
+      <div class="deco">🎯</div>
+    </div>
+    <div class="stat-card sc3">
+      <div class="big-num">0</div>
+      <div class="stat-label">Бумажных форм</div>
+      <div class="stat-desc">Все документы хранятся онлайн</div>
+      <div class="deco">📄</div>
+    </div>
+    <div class="stat-card sc4">
+      <div class="big-num">3</div>
+      <div class="stat-label">Языка системы</div>
+      <div class="stat-desc">Русский, кыргызский, английский</div>
+      <div class="deco">🌍</div>
+    </div>
+  </div>
+
+  <div class="bottom-pills">
+    <div class="pill">
+      <div class="p-icon">🏢</div>
+      <div>
+        <h4>Для бизнеса</h4>
+        <p>Управление компанией и декларациями</p>
+      </div>
+    </div>
+    <div class="pill">
+      <div class="p-icon">👤</div>
+      <div>
+        <h4>Для физлиц</h4>
+        <p>Простая подача без лишних шагов</p>
+      </div>
+    </div>
+    <div class="pill">
+      <div class="p-icon">🔍</div>
+      <div>
+        <h4>Для государства</h4>
+        <p>Прозрачный контроль и статистика</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-bar"></div>
+</body>
+</html>

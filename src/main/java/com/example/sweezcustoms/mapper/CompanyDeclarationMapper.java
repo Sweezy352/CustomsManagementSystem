@@ -17,8 +17,11 @@ public abstract class CompanyDeclarationMapper {
     @Autowired
     protected DeclarationProductMapper declarationProductMapper;
 
+    @Mapping(target = "currency", expression = "java(companyDeclarationDtoRequest.getCurrency() != null ? com.example.sweezcustoms.enums.CurrencyEnum.valueOf(companyDeclarationDtoRequest.getCurrency()) : null)")
     public abstract CompanyDeclaration toEntity(CompanyDeclarationDtoRequest companyDeclarationDtoRequest);
+
     @Mapping(target = "declarationProductDtos", expression = "java(declarationProductMapper.toDtoResponseList(companyDeclaration.getDeclarationProducts()))")
+    @Mapping(target = "currency", expression = "java(companyDeclaration.getCurrency() != null ? companyDeclaration.getCurrency().name() : null)")
     public abstract CompanyDeclarationDtoResponse toDtoResponse(CompanyDeclaration companyDeclaration);
     public abstract List<CompanyDeclarationDtoResponse> toDtoResponseList(List<CompanyDeclaration> companyDeclarations);
     public abstract CompanyDeclarationDtoView toDtoView(CompanyDeclaration companyDeclaration);

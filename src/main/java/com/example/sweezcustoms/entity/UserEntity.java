@@ -17,6 +17,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class UserEntity extends BaseEntity implements UserDetails {
     @Column(name = "mail", nullable = false, unique = true)
     private String mail;
@@ -44,6 +45,9 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "owner")
     private CompanyEntity companyOwn;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
+    private List<UserDeclaration> userDeclarations;
+
     @Column(name = "photo_profile_s3", nullable = false, unique = true)
     private String photoProfileS3;
     @Column(name = "signature_s3", nullable = false, unique = true)

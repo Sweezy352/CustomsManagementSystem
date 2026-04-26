@@ -49,9 +49,19 @@ public class SecurityFilterConfig{
 
 
         httpSecurity.authorizeHttpRequests(auth -> {
+
+            //Swagger UI
+            auth.requestMatchers("/swagger-ui/**").permitAll();
+            auth.requestMatchers("/v3/api-docs/**").permitAll();
+            auth.requestMatchers("/swagger-ui.html").permitAll();
+            auth.requestMatchers("/swagger-resources/**").permitAll();
+            auth.requestMatchers("/webjars/**").permitAll();
+
+
+
+            //Authentication
             auth.requestMatchers("/api/auth/register").permitAll();
             auth.requestMatchers("/api/auth/login").permitAll();
-            auth.requestMatchers("/error").permitAll();
             auth.requestMatchers("/api/auth/reset-password").permitAll();
             auth.requestMatchers("/api/auth/password-recovery").permitAll();
 
@@ -65,8 +75,52 @@ public class SecurityFilterConfig{
             auth.requestMatchers("/api/company/get-by-customs-code").authenticated();
 
 
+
             //CompanyDocument Controller
             auth.requestMatchers("/api/company-document/get-document-registration").hasAnyAuthority("OWNER", "MANAGER");
+
+            //TnvedCode Controller
+            auth.requestMatchers("/api/tnved/get-all").authenticated();
+            auth.requestMatchers("/api/tnved/get-by-id/*").authenticated();
+            auth.requestMatchers("/api/tnved/get-by-code").authenticated();
+            auth.requestMatchers("/api/tnved/create").hasAuthority("ADMIN");
+            auth.requestMatchers("/api/tnved/update/*").hasAuthority("ADMIN");
+            auth.requestMatchers("/api/tnved/delete/*").hasAuthority("ADMIN");
+
+            //DeclarationProduct Controller
+            auth.requestMatchers("/api/declaration-products/add/*").authenticated();
+            auth.requestMatchers("/api/declaration-products/get-by-id/*").authenticated();
+            auth.requestMatchers("/api/declaration-products/get-all/*").authenticated();
+            auth.requestMatchers("/api/declaration-products/update/*").authenticated();
+            auth.requestMatchers("/api/declaration-products/delete/*").hasAnyAuthority("OWNER", "MANAGER");
+
+            //Declaration status
+            auth.requestMatchers("/api/company-declarations/submit/*").hasAnyAuthority("OWNER", "MANAGER");
+            auth.requestMatchers("/api/company-declarations/approve/*").hasAnyAuthority("INSPECTOR", "ADMIN");
+            auth.requestMatchers("/api/company-declarations/reject/*").hasAnyAuthority("INSPECTOR", "ADMIN");
+            auth.requestMatchers("/api/user-declarations/submit/*").authenticated();
+            auth.requestMatchers("/api/user-declarations/approve/*").hasAnyAuthority("INSPECTOR", "ADMIN");
+            auth.requestMatchers("/api/user-declarations/reject/*").hasAnyAuthority("INSPECTOR", "ADMIN");
+
+            //Company verification
+            auth.requestMatchers("/api/company/pending").hasAnyAuthority("INSPECTOR", "ADMIN");
+            auth.requestMatchers("/api/company/verify/*").hasAnyAuthority("INSPECTOR", "ADMIN");
+
+            //Company employees
+            auth.requestMatchers("/api/company/*/employees/*").hasAuthority("OWNER");
+
+            //Branches
+            auth.requestMatchers("/api/branches/**").hasAnyAuthority("OWNER", "MANAGER");
+
+            //Car declarations
+            auth.requestMatchers("/api/car-declarations/user").authenticated();
+            auth.requestMatchers("/api/car-declarations/company/*").hasAnyAuthority("OWNER", "MANAGER");
+            auth.requestMatchers("/api/car-declarations/get-by-id/*").authenticated();
+            auth.requestMatchers("/api/car-declarations/get-by-vin").authenticated();
+            auth.requestMatchers("/api/car-declarations/my").authenticated();
+            auth.requestMatchers("/api/car-declarations/submit/*").authenticated();
+            auth.requestMatchers("/api/car-declarations/approve/*").hasAnyAuthority("INSPECTOR", "ADMIN");
+            auth.requestMatchers("/api/car-declarations/reject/*").hasAnyAuthority("INSPECTOR", "ADMIN");
 
 
             auth.anyRequest().authenticated();

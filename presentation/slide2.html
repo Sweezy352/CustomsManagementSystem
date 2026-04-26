@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  width:1280px; height:720px; overflow:hidden;
+  font-family:'Segoe UI',Arial,sans-serif;
+  background:#ffffff;
+  position:relative;
+}
+
+/* Верхняя цветная полоса */
+.top-bar {
+  position:absolute; top:0; left:0; right:0; height:8px;
+  background:linear-gradient(90deg, #e94560, #ff6b35, #f5a623);
+}
+
+/* Левая красная панель */
+.left-panel {
+  position:absolute; left:0; top:0; bottom:0; width:400px;
+  background:linear-gradient(160deg, #e94560 0%, #c0392b 100%);
+  display:flex; flex-direction:column; justify-content:center;
+  padding:60px 44px;
+}
+.left-panel::after {
+  content:'';
+  position:absolute; right:-40px; top:0; bottom:0; width:80px;
+  background:linear-gradient(160deg, #e94560 0%, #c0392b 100%);
+  clip-path:polygon(0 0, 50% 0, 100% 100%, 0 100%);
+}
+
+.slide-num {
+  font-size:11px; font-weight:700; letter-spacing:3px;
+  color:rgba(255,255,255,0.5); text-transform:uppercase;
+  margin-bottom:16px;
+}
+.left-panel h1 {
+  font-size:46px; font-weight:900; color:#fff;
+  line-height:1.1; margin-bottom:16px;
+}
+.left-panel p {
+  font-size:15px; color:rgba(255,255,255,0.75);
+  line-height:1.7;
+}
+.warning-box {
+  margin-top:28px;
+  background:rgba(0,0,0,0.2);
+  border-radius:10px; padding:14px 16px;
+  font-size:13px; color:#fff;
+  border-left:4px solid #f5a623;
+}
+
+/* Правая часть */
+.right-panel {
+  position:absolute; left:440px; right:0; top:8px; bottom:0;
+  padding:44px 50px 44px 30px;
+  display:flex; flex-direction:column; justify-content:center; gap:16px;
+}
+
+.problem-item {
+  display:flex; align-items:center; gap:20px;
+  background:#fff;
+  border:2px solid #f0f0f0;
+  border-radius:14px; padding:18px 22px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.06);
+  position:relative; overflow:hidden;
+}
+.problem-item::before {
+  content:''; position:absolute;
+  left:0; top:0; bottom:0; width:5px;
+}
+.pi1::before { background:#e94560; }
+.pi2::before { background:#ff6b35; }
+.pi3::before { background:#f5a623; }
+.pi4::before { background:#e94560; }
+
+.p-icon {
+  width:52px; height:52px; border-radius:12px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:24px; flex-shrink:0;
+}
+.pi1 .p-icon { background:#fef2f2; }
+.pi2 .p-icon { background:#fff7ed; }
+.pi3 .p-icon { background:#fffbeb; }
+.pi4 .p-icon { background:#fef2f2; }
+
+.p-text h3 { font-size:16px; font-weight:700; color:#1a1a2e; margin-bottom:4px; }
+.p-text p  { font-size:13px; color:#6b7280; line-height:1.5; }
+
+.bottom-note {
+  background:linear-gradient(135deg, #1a1a2e, #0f3460);
+  border-radius:12px; padding:14px 20px;
+  display:flex; align-items:center; gap:12px;
+  font-size:14px; color:#fff; font-weight:600;
+}
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+<div class="left-panel">
+  <div class="slide-num">02 / 08</div>
+  <h1>Как это<br>было<br>раньше</h1>
+  <p>Таможенное оформление в Кыргызстане — это боль для любого бизнеса</p>
+  <div class="warning-box">
+    ⚠️ Всё это тормозило развитие бизнеса и торговли
+  </div>
+</div>
+
+<div class="right-panel">
+  <div class="problem-item pi1">
+    <div class="p-icon">📄</div>
+    <div class="p-text">
+      <h3>Горы бумажных документов</h3>
+      <p>Каждая декларация — десятки страниц, которые нужно заполнить вручную и принести лично в окошко</p>
+    </div>
+  </div>
+  <div class="problem-item pi2">
+    <div class="p-icon">⏳</div>
+    <div class="p-text">
+      <h3>Недели ожидания</h3>
+      <p>Оформление одной партии товара занимало от 5 до 20 рабочих дней из-за очередей и ручной проверки</p>
+    </div>
+  </div>
+  <div class="problem-item pi3">
+    <div class="p-icon">❌</div>
+    <div class="p-text">
+      <h3>Ошибки и потери документов</h3>
+      <p>Человеческий фактор приводил к ошибкам в расчётах пошлин и потере важных бумаг</p>
+    </div>
+  </div>
+  <div class="problem-item pi4">
+    <div class="p-icon">💸</div>
+    <div class="p-text">
+      <h3>Непрозрачные расчёты налогов</h3>
+      <p>Компании не понимали, сколько именно они должны заплатить — расчёты были непрозрачными</p>
+    </div>
+  </div>
+  <div class="bottom-note">
+    🚫 Итог: бизнес терял деньги, время и нервы на каждой поставке
+  </div>
+</div>
+</body>
+</html>

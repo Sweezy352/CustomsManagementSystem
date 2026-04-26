@@ -1,4 +1,0 @@
-ALTER TABLE companies DROP COLUMN IF EXISTS address;
-ALTER TABLE individuals DROP COLUMN IF EXISTS address;
-
-ALTER TABLE participants ALTER COLUMN address SET NOT NULL;

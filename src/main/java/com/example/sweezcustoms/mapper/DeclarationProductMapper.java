@@ -12,7 +12,9 @@ import java.util.List;
 public abstract class DeclarationProductMapper {
     @Mapping(target = "tnvedCode", ignore = true)
     public abstract DeclarationProduct toEntity(DeclarationProductDtoRequest declarationProductDtoRequest);
-    @Mapping(target = "tnvedCode", ignore = true)
+
+    @Mapping(target = "tnvedCode", expression = "java(declarationProduct.getTnvedCode() != null ? declarationProduct.getTnvedCode().getCode() : null)")
     public abstract DeclarationProductDto toDtoResponse(DeclarationProduct declarationProduct);
+
     public abstract List<DeclarationProductDto> toDtoResponseList(List<DeclarationProduct> declarationProducts);
 }

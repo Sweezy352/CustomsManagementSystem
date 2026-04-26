@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  width:1280px; height:720px; overflow:hidden;
+  font-family:'Segoe UI',Arial,sans-serif;
+  background:#f8fafc;
+  position:relative;
+}
+
+/* Левая цветная полоса */
+.left-accent {
+  position:absolute; left:0; top:0; bottom:0; width:10px;
+  background:linear-gradient(180deg, #9b59b6, #3498db, #2ecc71, #f5a623, #e94560);
+}
+
+/* Заголовок */
+.page-header {
+  position:absolute; top:0; left:10px; right:0; height:110px;
+  background:linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+  display:flex; align-items:center; padding:0 50px;
+  gap:24px;
+}
+.page-header .slide-num {
+  font-size:11px; font-weight:700; letter-spacing:3px;
+  color:rgba(255,255,255,0.35); text-transform:uppercase;
+}
+.page-header h1 { font-size:34px; font-weight:900; color:#fff; }
+.page-header h1 em { font-style:normal; color:#f5a623; }
+.page-header p { font-size:14px; color:rgba(255,255,255,0.5); margin-left:auto; }
+
+/* Сетка ролей */
+.roles-grid {
+  position:absolute; top:110px; left:10px; right:0; bottom:0;
+  padding:20px 40px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  grid-template-rows:repeat(2,1fr);
+  gap:14px;
+}
+
+.role-card {
+  border-radius:14px; padding:20px 18px;
+  display:flex; flex-direction:column; gap:10px;
+  position:relative; overflow:hidden;
+  border:2px solid transparent;
+  background:#fff;
+  box-shadow:0 2px 12px rgba(0,0,0,0.07);
+  transition:0.2s;
+}
+
+/* Цветная верхняя полоса */
+.role-card::before {
+  content:''; position:absolute;
+  top:0; left:0; right:0; height:5px;
+  border-radius:14px 14px 0 0;
+}
+.rc1::before { background:linear-gradient(90deg,#e94560,#ff6b6b); }
+.rc2::before { background:linear-gradient(90deg,#9b59b6,#8e44ad); }
+.rc3::before { background:linear-gradient(90deg,#2ecc71,#27ae60); }
+.rc4::before { background:linear-gradient(90deg,#f5a623,#e67e22); }
+.rc5::before { background:linear-gradient(90deg,#3498db,#2980b9); }
+.rc6::before { background:linear-gradient(90deg,#1abc9c,#16a085); }
+.rc7::before { background:linear-gradient(90deg,#e67e22,#d35400); }
+.rc8::before { background:linear-gradient(90deg,#34495e,#2c3e50); }
+
+.role-emoji { font-size:30px; line-height:1; }
+
+.role-name { font-size:15px; font-weight:800; color:#1a1a2e; }
+
+.role-tag {
+  display:inline-block;
+  font-size:10px; font-weight:700; letter-spacing:1px;
+  padding:3px 9px; border-radius:100px;
+  text-transform:uppercase; width:fit-content;
+}
+.rc1 .role-tag { background:#fee2e2; color:#b91c1c; }
+.rc2 .role-tag { background:#ede9fe; color:#6d28d9; }
+.rc3 .role-tag { background:#d1fae5; color:#065f46; }
+.rc4 .role-tag { background:#fef3c7; color:#92400e; }
+.rc5 .role-tag { background:#dbeafe; color:#1e40af; }
+.rc6 .role-tag { background:#ccfbf1; color:#0f766e; }
+.rc7 .role-tag { background:#ffedd5; color:#9a3412; }
+.rc8 .role-tag { background:#f1f5f9; color:#334155; }
+
+.role-desc { font-size:12px; color:#6b7280; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="left-accent"></div>
+
+<div class="page-header">
+  <div>
+    <div class="slide-num">04 / 08</div>
+    <h1>Кто работает в системе — <em>8 ролей</em></h1>
+  </div>
+  <p>Каждый видит только то, что нужно именно ему</p>
+</div>
+
+<div class="roles-grid">
+  <div class="role-card rc1">
+    <div class="role-emoji">🛡️</div>
+    <div class="role-name">Администратор</div>
+    <div class="role-tag">ADMIN</div>
+    <div class="role-desc">Полный контроль над системой, настройка ставок и управление всеми пользователями</div>
+  </div>
+  <div class="role-card rc2">
+    <div class="role-emoji">🔍</div>
+    <div class="role-name">Инспектор</div>
+    <div class="role-tag">INSPECTOR</div>
+    <div class="role-desc">Проверяет и одобряет декларации, верифицирует компании перед допуском</div>
+  </div>
+  <div class="role-card rc3">
+    <div class="role-emoji">🏢</div>
+    <div class="role-name">Владелец компании</div>
+    <div class="role-tag">OWNER</div>
+    <div class="role-desc">Управляет компанией, добавляет сотрудников, видит все данные и документы</div>
+  </div>
+  <div class="role-card rc4">
+    <div class="role-emoji">📋</div>
+    <div class="role-name">Менеджер</div>
+    <div class="role-tag">MANAGER</div>
+    <div class="role-desc">Создаёт и подаёт декларации, работает с документами компании</div>
+  </div>
+  <div class="role-card rc5">
+    <div class="role-emoji">💰</div>
+    <div class="role-name">Бухгалтер</div>
+    <div class="role-tag">ACCOUNTANT</div>
+    <div class="role-desc">Видит счета, инвойсы и историю всех платежей компании</div>
+  </div>
+  <div class="role-card rc6">
+    <div class="role-emoji">📊</div>
+    <div class="role-name">Аналитик</div>
+    <div class="role-tag">ANALYTIC</div>
+    <div class="role-desc">Просматривает отчёты и статистику в режиме только для чтения</div>
+  </div>
+  <div class="role-card rc7">
+    <div class="role-emoji">🚚</div>
+    <div class="role-name">Логист</div>
+    <div class="role-tag">LOGISTICIAN</div>
+    <div class="role-desc">Отслеживает статусы грузов и управляет логистическими операциями</div>
+  </div>
+  <div class="role-card rc8">
+    <div class="role-emoji">👤</div>
+    <div class="role-name">Физическое лицо</div>
+    <div class="role-tag">USER</div>
+    <div class="role-desc">Частный человек, подающий декларацию на личный товар или автомобиль</div>
+  </div>
+</div>
+</body>
+</html>

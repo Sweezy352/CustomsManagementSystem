@@ -17,14 +17,14 @@ public abstract class TnvedCodeMapper {
     @Lazy
     protected UserMapper userMapper;
 
-    abstract TnvedCodeEntity toEntity(TnvedCodeDtoRequest tnvedCodeDtoRequest);
+    public abstract TnvedCodeEntity toEntity(TnvedCodeDtoRequest tnvedCodeDtoRequest);
 
     @Mapping(target = "userDtoView", expression = "java(userMapper.toDtoView(tnvedCodeEntity.getUserEntity()))")
-    abstract TnvedCodeDtoResponse toDtoResponse(TnvedCodeEntity tnvedCodeEntity);
+    public abstract TnvedCodeDtoResponse toDtoResponse(TnvedCodeEntity tnvedCodeEntity);
 
-    abstract List<TnvedCodeDtoResponse> toDtoResponseList(List<TnvedCodeEntity> tnvedCodeEntities);
+    public abstract List<TnvedCodeDtoResponse> toDtoResponseList(List<TnvedCodeEntity> tnvedCodeEntities);
 
-    abstract TnvedCodeDtoView toDtoView(TnvedCodeEntity tnvedCodeEntity);
+    public abstract TnvedCodeDtoView toDtoView(TnvedCodeEntity tnvedCodeEntity);
 
-    abstract List<TnvedCodeDtoView> toDtoViewList(List<TnvedCodeEntity> tnvedCodeEntities);
+    public abstract List<TnvedCodeDtoView> toDtoViewList(List<TnvedCodeEntity> tnvedCodeEntities);
 }

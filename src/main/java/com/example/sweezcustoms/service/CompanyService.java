@@ -13,5 +13,8 @@ public interface CompanyService {
     CompanyEntity getCompanyByTin(String tin);
     CompanyEntity getCompanyByOkpo(String okpo);
     CompanyEntity getCompanyByCustomsCode(String customsCode);
-
+    void addEmployee(Long companyId, Long userId, String roleName);
+    void removeEmployee(Long companyId, Long userId);
+    CompanyEntity verifyCompany(Long companyId, boolean approve);
+    List<CompanyEntity> getPendingCompanies();
 }

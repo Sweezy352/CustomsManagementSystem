@@ -14,6 +14,7 @@ import com.example.sweezcustoms.service.SignatureService;
 import com.example.sweezcustoms.utils.InternalizationHelper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +28,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
@@ -43,10 +45,10 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional
     public UserEntity register(UserEntity userEntity, MultipartFile profilePicture, MultipartFile signature) {
-        System.out.println("fewofwpfwjfep______>>>>>> " + userEntity.getBirthDate());
         userEntity.setPhotoProfileS3(photoProfileService.uploadPhoto(profilePicture));
         userEntity.setSignatureS3(signatureService.uploadSignature(signature));
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+
         return userRepository.save(userEntity);
     }
 
@@ -111,7 +113,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println(username);
-        return userRepository.findByMail(username).orElseThrow(() -> new UserNotFoundException("error.user.notfound"));
+        UserEntity userEntity = userRepository.findByPinOrMail(username, username)
+                .orElseThrow(() -> new UserNotFoundException("error.user.notfound"));
+        log.info("---------------->>>>>>>>>>>>>>>>>>>>>>>>: " + userEntity.getRoles().stream().map(role -> role.getRoleName()).toList().toString());
+        return userEntity;
     }
 }
