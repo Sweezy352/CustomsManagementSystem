@@ -33,6 +33,7 @@ public class ContractEntity extends BaseEntity{
     private String currencyCode;
     @Column(name = "total_amount", nullable = false)
     private BigDecimal totalAmount;
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private ContractEnums status;
     @Column(name = "file_name", nullable = false, unique = true)

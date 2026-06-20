@@ -3,6 +3,7 @@ package com.example.sweezcustoms.service.impl;
 import com.example.sweezcustoms.entity.CompanyEntity;
 import com.example.sweezcustoms.entity.RoleEntity;
 import com.example.sweezcustoms.entity.UserEntity;
+import com.example.sweezcustoms.enums.CompanyDocumentType;
 import com.example.sweezcustoms.enums.CustomsStatusEnum;
 import com.example.sweezcustoms.exceptions.CompanyNotFoundException;
 import com.example.sweezcustoms.exceptions.CompanyWithSuchNameAlreadyExists;
@@ -14,10 +15,12 @@ import com.example.sweezcustoms.repository.CompanyRepository;
 import com.example.sweezcustoms.repository.RoleRepository;
 import com.example.sweezcustoms.repository.UserRepository;
 import com.example.sweezcustoms.service.AuthService;
+import com.example.sweezcustoms.service.CompanyDocumentService;
 import com.example.sweezcustoms.service.CompanyService;
 import com.example.sweezcustoms.utils.BusinessIdentityGenerator;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -32,6 +35,7 @@ public class CompanyServiceImpl implements CompanyService {
     private final AuthService authService;
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
+    private final CompanyDocumentService companyDocumentService;
 
     @Override
     @Transactional
@@ -134,7 +138,9 @@ public class CompanyServiceImpl implements CompanyService {
         company.setStatus(approve ? CustomsStatusEnum.APPROVED : CustomsStatusEnum.REJECTED);
         company.setVerifiedBy(inspector);
         company.setVerifiedAt(LocalDateTime.now());
-        return companyRepository.save(company);
+        company = companyRepository.save(company);
+        companyDocumentService.createDocument(company, CompanyDocumentType.COMPANY_REG_CERTIFICATE, LocaleContextHolder.getLocale().toString());
+        return company;
     }
 
     @Override

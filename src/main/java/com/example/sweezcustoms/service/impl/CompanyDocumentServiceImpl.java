@@ -65,12 +65,10 @@ public class CompanyDocumentServiceImpl implements CompanyDocumentService {
         variables.put("company", companyEntity);
         variables.put("issueDate", companyEntity.getVerifiedAt());
 
-        byte[] pdfGenerated = pdfGenerator.generateCertificate(
-                variables,
-                companyDocumentType.name(),
-                lang,
-                documentVerificationAddress
-        );
+        byte[] pdfGenerated = generateCertificate(
+                companyEntity,
+                companyDocumentType,
+                lang);
 
         String objectName = String.format("companies_%d_cert_%s.pdf", companyEntity.getId(), lang);
         minIoService.uploadWithBytes(bucketName, pdfGenerated, objectName, "application/pdf");

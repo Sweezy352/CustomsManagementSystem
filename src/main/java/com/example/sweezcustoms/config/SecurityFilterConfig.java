@@ -69,7 +69,7 @@ public class SecurityFilterConfig{
             auth.requestMatchers("/api/company/create-company").authenticated();
             auth.requestMatchers("/api/company/get-by-id/*").authenticated();
             auth.requestMatchers("/api/company/get-by-company-name").authenticated();
-            auth.requestMatchers("/api/company/get-employees-company/*").hasAnyAuthority("OWNER", "MANAGER");
+            auth.requestMatchers("/api/company/get-employees-company/*").hasAnyAuthority("OWNER", "MANAGER", "ADMIN");
             auth.requestMatchers("/api/company/get-by-tin").authenticated();
             auth.requestMatchers("/api/company/get-by-okpo").authenticated();
             auth.requestMatchers("/api/company/get-by-customs-code").authenticated();
@@ -77,7 +77,7 @@ public class SecurityFilterConfig{
 
 
             //CompanyDocument Controller
-            auth.requestMatchers("/api/company-document/get-document-registration").hasAnyAuthority("OWNER", "MANAGER");
+            auth.requestMatchers("/api/company-document/get-document-registration").hasAnyAuthority("OWNER", "MANAGER", "ADMIN");
 
             //TnvedCode Controller
             auth.requestMatchers("/api/tnved/get-all").authenticated();
@@ -92,10 +92,10 @@ public class SecurityFilterConfig{
             auth.requestMatchers("/api/declaration-products/get-by-id/*").authenticated();
             auth.requestMatchers("/api/declaration-products/get-all/*").authenticated();
             auth.requestMatchers("/api/declaration-products/update/*").authenticated();
-            auth.requestMatchers("/api/declaration-products/delete/*").hasAnyAuthority("OWNER", "MANAGER");
+            auth.requestMatchers("/api/declaration-products/delete/*").hasAnyAuthority("OWNER", "MANAGER", "ADMIN");
 
             //Declaration status
-            auth.requestMatchers("/api/company-declarations/submit/*").hasAnyAuthority("OWNER", "MANAGER");
+            auth.requestMatchers("/api/company-declarations/submit/*").hasAnyAuthority("OWNER", "MANAGER", "ADMIN");
             auth.requestMatchers("/api/company-declarations/approve/*").hasAnyAuthority("INSPECTOR", "ADMIN");
             auth.requestMatchers("/api/company-declarations/reject/*").hasAnyAuthority("INSPECTOR", "ADMIN");
             auth.requestMatchers("/api/user-declarations/submit/*").authenticated();
@@ -107,14 +107,14 @@ public class SecurityFilterConfig{
             auth.requestMatchers("/api/company/verify/*").hasAnyAuthority("INSPECTOR", "ADMIN");
 
             //Company employees
-            auth.requestMatchers("/api/company/*/employees/*").hasAuthority("OWNER");
+            auth.requestMatchers("/api/company/*/employees/*").hasAnyAuthority("OWNER", "ADMIN");
 
             //Branches
-            auth.requestMatchers("/api/branches/**").hasAnyAuthority("OWNER", "MANAGER");
+            auth.requestMatchers("/api/branches/**").hasAnyAuthority("OWNER", "MANAGER", "ADMIN");
 
             //Car declarations
             auth.requestMatchers("/api/car-declarations/user").authenticated();
-            auth.requestMatchers("/api/car-declarations/company/*").hasAnyAuthority("OWNER", "MANAGER");
+            auth.requestMatchers("/api/car-declarations/company/*").hasAnyAuthority("OWNER", "MANAGER", "ADMIN");
             auth.requestMatchers("/api/car-declarations/get-by-id/*").authenticated();
             auth.requestMatchers("/api/car-declarations/get-by-vin").authenticated();
             auth.requestMatchers("/api/car-declarations/my").authenticated();

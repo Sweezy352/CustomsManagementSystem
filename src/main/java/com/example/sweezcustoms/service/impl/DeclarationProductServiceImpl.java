@@ -11,6 +11,7 @@ import com.example.sweezcustoms.service.CompanyDeclarationService;
 import com.example.sweezcustoms.service.DeclarationProductService;
 import com.example.sweezcustoms.service.TnvedCodeService;
 import com.example.sweezcustoms.service.UserDeclarationService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ public class DeclarationProductServiceImpl implements DeclarationProductService 
     private final TnvedCodeService tnvedCodeService;
 
     @Override
+    @Transactional
     public DeclarationProduct addToDeclaration(Long declarationId, DeclarationProduct product, String tnvedCode) {
         DeclarationEntity declaration = resolveDeclaration(declarationId);
         product.setDeclarationEntity(declaration);

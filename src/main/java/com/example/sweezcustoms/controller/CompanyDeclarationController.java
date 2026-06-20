@@ -40,6 +40,7 @@ public class CompanyDeclarationController {
     public ResponseEntity<CompanyDeclarationDtoResponse> createDeclaration(
             @RequestBody CompanyDeclarationDtoRequest request
     ) throws BaseException {
+        System.out.println("request: declarationType: " + request.getDeclarationType().name());
         return ResponseEntity.ok(
                 companyDeclarationMapper.toDtoResponse(
                         companyDeclarationService.createDeclaration(

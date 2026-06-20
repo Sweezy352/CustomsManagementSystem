@@ -1,15 +1,3 @@
-package com.example.sweezcustoms.mapper;
-
-import com.example.sweezcustoms.dto.request.CompanyDeclarationDtoRequest;
-import com.example.sweezcustoms.dto.response.CompanyDeclarationDtoResponse;
-import com.example.sweezcustoms.dto.view.CompanyDeclarationDtoView;
-import com.example.sweezcustoms.entity.CompanyDeclaration;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public abstract class CompanyDeclarationMapper {
@@ -21,11 +9,16 @@ public abstract class CompanyDeclarationMapper {
     public abstract CompanyDeclaration toEntity(CompanyDeclarationDtoRequest companyDeclarationDtoRequest);
 
     @Mapping(target = "declarationProductDtos", expression = "java(declarationProductMapper.toDtoResponseList(companyDeclaration.getDeclarationProducts()))")
-    @Mapping(target = "declarationType", expression = "java(companyDeclaration.getDeclarationType().name())")
+    @Mapping(target = "documentType", expression = "java(companyDeclaration.getDeclarationType().name())")
     @Mapping(target = "currency", expression = "java(companyDeclaration.getCurrency() != null ? companyDeclaration.getCurrency().name() : null)")
     public abstract CompanyDeclarationDtoResponse toDtoResponse(CompanyDeclaration companyDeclaration);
     public abstract List<CompanyDeclarationDtoResponse> toDtoResponseList(List<CompanyDeclaration> companyDeclarations);
-    @Mapping(target = "declarationType", expression = "java(companyDeclaration.getDeclarationType().name())")
+    @Mapping(target = "documentType", expression = "java(companyDeclaration.getDeclarationType().name())")
     public abstract CompanyDeclarationDtoView toDtoView(CompanyDeclaration companyDeclaration);
     public abstract List<CompanyDeclarationDtoView> toDtoViewList(List<CompanyDeclaration> companyDeclarations);
 }
+
+
+java: Unknown property "documentType" in result type CompanyDeclarationDtoResponse.CompanyDeclarationDtoResponseBuilder. Did you mean "null"?
+
+Почему выходит такая ошибка?

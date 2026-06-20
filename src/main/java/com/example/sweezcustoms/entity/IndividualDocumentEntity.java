@@ -19,10 +19,12 @@ public class IndividualDocumentEntity extends BaseEntity{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity userEntity;
+    @Enumerated(EnumType.STRING)
     @Column(name = "document_type", nullable = false)
     private IndividualDocumentType individualDocumentType;
     @Column(name = "uploaded_at")
     private LocalDateTime uploadedAt;
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private CustomsStatusEnum status;
     @ManyToOne(fetch = FetchType.EAGER)

@@ -1,0 +1,1 @@
+ALTER TABLE declarations ADD COLUMN IF NOT EXISTS declaration_type VARCHAR(255);

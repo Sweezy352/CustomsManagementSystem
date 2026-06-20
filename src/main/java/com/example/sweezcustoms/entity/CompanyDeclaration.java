@@ -1,8 +1,11 @@
 package com.example.sweezcustoms.entity;
 
+import com.example.sweezcustoms.enums.CustomsStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "company_declarations")
@@ -30,5 +33,11 @@ public class CompanyDeclaration extends DeclarationEntity{
     private String transportType;
     @Column(name = "transport_id")
     private String transportId;
+
+    @PrePersist
+    public void prePersist(){
+        status = CustomsStatusEnum.DRAFT;
+        createdAt = LocalDateTime.now();
+    }
 
 }

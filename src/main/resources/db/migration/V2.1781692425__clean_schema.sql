@@ -60,9 +60,18 @@ CREATE TABLE IF NOT EXISTS companies (
 );
 
 -- Теперь добавляем FK company_id в users
-ALTER TABLE users
-    ADD CONSTRAINT fk_users_company
-    FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE SET NULL;
+DO $$
+    BEGIN
+        IF NOT EXISTS (
+            SELECT 1
+            FROM pg_constraint
+            WHERE conname = 'fk_users_company'
+        ) THEN
+            ALTER TABLE users
+                ADD CONSTRAINT fk_users_company
+                    FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE SET NULL;
+        END IF;
+    END $$;
 
 -- ------------------------------------------------------------
 -- 3. ФИЛИАЛЫ КОМПАНИИ

@@ -48,7 +48,7 @@ public class AuthController {
     ) throws BaseException {
         return ResponseEntity.ok(
                 userMapper.toDtoResponse(
-                        authService.register(userMapper.toEntity(userDtoRequest), photoUser, signatureUser)
+                        authService.register(userMapper.toEntity(userDtoRequest), photoUser, signatureUser, userDtoRequest.getRoleName())
                 )
         );
     }

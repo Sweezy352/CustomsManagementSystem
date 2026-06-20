@@ -52,7 +52,8 @@ services:
       - cloud-net
 
 
-
+volumes:
+  minio-data:
 
 networks:
   cloud-net:

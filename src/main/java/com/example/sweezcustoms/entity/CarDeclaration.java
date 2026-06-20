@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "car_declarations")
 @Getter
@@ -66,11 +68,11 @@ public class CarDeclaration extends DeclarationEntity {
 
     // Рассчитанные таможенные платежи
     @Column(name = "nds_amount")
-    private java.math.BigDecimal ndsAmount;
+    private BigDecimal ndsAmount;
 
     @Column(name = "customs_duty_amount")
-    private java.math.BigDecimal customsDutyAmount;
+    private BigDecimal customsDutyAmount;
 
     @Column(name = "excise_amount")
-    private java.math.BigDecimal exciseAmount;
+    private BigDecimal exciseAmount;
 }

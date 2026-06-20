@@ -25,6 +25,9 @@ public class CompanyEntity extends BaseEntity{
     private String okpo;
     @Column(name = "customs_code", nullable = false, unique = true)
     private String customsCode;
+    @Column(name = "address", nullable = false)
+    private String address;
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private CustomsStatusEnum status;
     @Column(name = "created_at")

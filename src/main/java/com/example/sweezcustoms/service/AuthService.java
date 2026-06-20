@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface AuthService extends UserDetailsService {
-    UserEntity register(UserEntity userEntity, MultipartFile profilePicture, MultipartFile signature);
+    UserEntity register(UserEntity userEntity, MultipartFile profilePicture, MultipartFile signature, String roleName);
     AuthenticationToken login(AuthenticationTokenRequest authenticationTokenRequest);
     void passwordRecovery(String email);
     void resetPassword(String code, PasswordConfirmation passwordConfirmation);

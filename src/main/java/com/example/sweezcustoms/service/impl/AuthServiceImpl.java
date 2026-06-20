@@ -1,7 +1,9 @@
 package com.example.sweezcustoms.service.impl;
 
+import com.example.sweezcustoms.entity.RoleEntity;
 import com.example.sweezcustoms.entity.UserEntity;
 import com.example.sweezcustoms.exceptions.*;
+import com.example.sweezcustoms.repository.RoleRepository;
 import com.example.sweezcustoms.repository.UserRepository;
 import com.example.sweezcustoms.security.AuthenticationToken;
 import com.example.sweezcustoms.security.AuthenticationTokenRequest;
@@ -24,6 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -41,13 +44,17 @@ public class AuthServiceImpl implements AuthService {
     private final InternalizationHelper internalizationHelper;
     private final SignatureService signatureService;
     private final PhotoProfileService photoProfileService;
+    private final RoleRepository roleRepository;
 
     @Override
     @Transactional
-    public UserEntity register(UserEntity userEntity, MultipartFile profilePicture, MultipartFile signature) {
+    public UserEntity register(UserEntity userEntity, MultipartFile profilePicture, MultipartFile signature, String roleName) {
         userEntity.setPhotoProfileS3(photoProfileService.uploadPhoto(profilePicture));
         userEntity.setSignatureS3(signatureService.uploadSignature(signature));
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+        RoleEntity roleEntity = roleRepository.findByRoleName(roleName).orElseThrow(() -> new RuntimeException("Такой роли нету"));
+        roleEntity.setUserEntities(List.of(userEntity));
+        userEntity.setRoles(List.of(roleEntity));
 
         return userRepository.save(userEntity);
     }

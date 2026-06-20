@@ -3,6 +3,7 @@ package com.example.sweezcustoms.entity;
 import com.example.sweezcustoms.enums.CurrencyEnum;
 import com.example.sweezcustoms.enums.CustomsStatusEnum;
 import com.example.sweezcustoms.enums.DeclarationDocumentType;
+import com.example.sweezcustoms.enums.DeclarationTypeEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -21,14 +22,20 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public abstract class DeclarationEntity extends BaseEntity{
+    @Enumerated(EnumType.STRING)
+    @Column(name = "declaration_type", nullable = false)
+    protected DeclarationTypeEnum declarationType;
+    @Enumerated(EnumType.STRING)
     @Column(name = "document_type")
     protected DeclarationDocumentType documentType;
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
     protected CustomsStatusEnum status;
     @Column(name = "created_at")
     protected LocalDateTime createdAt;
     @Column(name = "submitted_at")
     protected LocalDateTime submittedAt;
+    @Enumerated(EnumType.STRING)
     @Column(name = "currency")
     protected CurrencyEnum currency;
     @Column(name = "currency_rate")
@@ -37,11 +44,4 @@ public abstract class DeclarationEntity extends BaseEntity{
     protected List<DeclarationProduct> declarationProducts;
     @Column(name = "file_name", unique = true)
     protected String fileName;
-
-
-    @PrePersist
-    public void prePersist(){
-        status = CustomsStatusEnum.DRAFT;
-        createdAt = LocalDateTime.now();
-    }
 }

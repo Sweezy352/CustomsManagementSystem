@@ -52,6 +52,9 @@ public class UserEntity extends BaseEntity implements UserDetails {
     private String photoProfileS3;
     @Column(name = "signature_s3", nullable = false, unique = true)
     private String signatureS3;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ai_chat_id", referencedColumnName = "id")
+    private AiChat aiChat;
 
 
     @PrePersist
